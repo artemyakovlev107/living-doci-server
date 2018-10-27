@@ -1,0 +1,137 @@
+
+<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body" >	
+        <div class="animate">
+            <div class="header">
+                <h4 class="header-title">Data Submission History</h4>
+            </div>
+            <br/>
+                <div class="m-portlet m-portlet--mobile">
+                    <!-- <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                        <h4 class="header-title">
+                            
+                        </h4>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">			
+
+                    </div>
+                    </div> -->
+                    <div class="m-portlet__body">
+                    <!--begin: Datatable -->
+                    <div class=" m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="local_data">
+                        <table  [mfData]="history" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" class="m-datatable__table table table-striped tablesorter-blue table-admin-metrics" style="display: block; min-height: 300px; overflow-x: auto;">
+                            <thead class="m-datatable__head">
+                                 <tr class="m-datatable__row">
+                                    <th  class="m-datatable__cell text-center" style="width: 20%"> <mfDefaultSorter by="date">Data timeframe </mfDefaultSorter></th>
+                                    <th  class="m-datatable__cell text-center" style="width: 20%">340B FINANCIAL STATEMENT</th>
+                                    <th  class="m-datatable__cell text-center" style="width: 10%">EMR</th>
+                                    <th  class="m-datatable__cell text-center" style="width: 10%">submitted by</th>
+                                    <th  class="m-datatable__cell text-center" style="width: 20%">submitted date</th>
+                                    <th  class="m-datatable__cell text-center" style="width: 20%"></th>                             
+                                </tr>
+                            </thead>
+                            <tbody class="m-datatable__body">
+                                <tr data-row="0" class="m-datatable__row" *ngFor="let item of mf.data; let i = index" style="table-layout: fixed;">
+                                    <td data-field="OrderID" class="m-datatable__cell text-center" >{{item.time}}      
+                                    </td>
+                                    <td class="m-datatable__cell text-center"><span><span class="item-text-table text-success" *ngIf="item.financial_url">Yes</span>&nbsp;
+                                        <span class="item-text-table text-danger" *ngIf="!item.financial_url">No</span>&nbsp;
+                                        <label class="upload_label" for="financial_url_{{i}}">
+                                          <i class="fa fa-file-upload" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="upload_label" *ngIf="item.financial_url" (click)="confirmDeleteFile(item,1)">&nbsp;
+                                          <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </label>
+                                        <input type="file" hidden accept=".xlsx, .csv" (change)="uploadfile(1,$event,item.time,item.is_base_line)" id="financial_url_{{i}}"
+                                        /></span>
+                                    </td>
+                                    <td  class="m-datatable__cell text-center" style="width: 10%"><span>
+                                        <span class="item-text-table text-success" *ngIf="item.emr_url">Yes</span>&nbsp;
+                                        <span class="item-text-table text-danger" *ngIf="!item.emr_url">No</span>&nbsp;
+                                        <label class="upload_label" for="emr_url_{{i}}">
+                                          <i class="fa fa-upload" aria-hidden="true"></i>
+                                        </label>&nbsp;
+                                        <label class="upload_label" *ngIf="item.emr_url" (click)="confirmDeleteFile(item,2)">
+                                          <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </label>
+                                        <input type="file" hidden accept=".xlsx, .csv" id="emr_url_{{i}}" (change)="uploadfile(2,$event,item.time,item.is_base_line)"
+                                        /></span>
+                                    </td>
+                                    <td class="m-datatable__cell text-center" style="width: 10%">{{item.fullname}}</td>
+                                    <td  class="m-datatable__cell text-center" style="width: 20%">{{item.updated_at}}</td>
+                                    <td class="m-datatable__cell text-center" style="width: 20%">
+                                    					
+                                        <a  class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" [routerLink]="['/upload-report/history']" placement="top" ngbTooltip="Reload" ngbTooltipClass="m-tooltip"><i class="la la-refresh" ></i>                            
+                                        </a>						  					    		
+                                        <button  class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill"  (click)="confirmDelete(item)">                            <i class="la la-remove"></i>                        
+                                        </button>					
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <div >
+                                <pagination-controls (pageChange)="page = $event" style="
+                                    color: black;
+                                    font-size: 1rem;
+                                    font-weight: 400;
+                                    line-height: 1.428571428571429;
+                                "></pagination-controls>
+                            </div> -->
+                    </div>
+                </div>
+            </div>
+
+    <!-- Modal confirm delete location-->
+    <div class="modal fade" id="confirmDelete" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirm delete history</h4>
+            </div>
+            <div class="modal-body">
+              Are you sure delete this?
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-info" (click)="deleteHistory()">Delete</button>
+              <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- delete File -->
+    <div class="modal fade" id="confirmDeleteFile" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirm delete file</h4>
+            </div>
+            <div class="modal-body">
+              Are you sure delete this file?
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-info" (click)="deleteFile()">Delete</button>
+              <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <style>
+    .animate{
+        width:100%;
+    }
+    .header-title{
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__head .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__body .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__foot .m-datatable__row>.m-datatable__cell {
+      font-weight: 500;
+      font-size: 1.1rem
+    }
+     
+     </style>
+    

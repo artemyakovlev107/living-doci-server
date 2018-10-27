@@ -1,0 +1,145 @@
+<div class="dashboard_col_right">
+    <H2>MANAGE MEMBER</H2>
+    <div class="row">
+        <div class="col-md-6"><a class="btn" (click)="modalMember('Add','')">Invite Member</a></div>
+        <div class="col-md-6"></div>
+    </div>
+    <div class="dashboard_col_right--content">
+        <div class=" content-tab current" id="content-tab-1">
+            <div class="admin-metrics-bottom table-responsive">
+                <table id="table-ma" class="table table-striped tablesorter-blue table-admin-metrics" [mfRowsOnPage]="rowsOnPage" [mfData]="listMember" #mf="mfDataTable">
+                    <thead class="table-bordered">
+                    <tr>
+                        <th class="text-center">
+                            <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                        </th>
+                        <th class="text-center">
+                            <mfDefaultSorter by="full_name">Name</mfDefaultSorter>
+                        </th>
+                        <th class="text-center">
+                            <mfDefaultSorter by="Role">Role</mfDefaultSorter>
+                        </th>
+                        <th class="text-center">
+                            <mfDefaultSorter by="total_point">Total Point</mfDefaultSorter>
+                        </th>
+                        <th class="text-center">
+                            <mfDefaultSorter by="token">token</mfDefaultSorter>
+                        </th>
+                        <th class="text-center">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-bordered">
+                    <tr *ngFor="let item of mf.data">
+                        <td class="text-center">{{item.email}}</td>
+                        <td class="text-center">{{item.full_name}}</td>
+                        <td class="text-center">{{item.role==0?'Member':(item.role==1?'Admin' : 'Hospital Admin')}}</td>
+                        <td class="text-center">{{item.total_point}}</td>
+                        <td class="text-center">{{item.token}}</td>
+                        <td class="text-center">
+                            <a class="btn btn-left btn-signin" (click)="modalGiveToken(item)">Give token</a>
+                            <a class="btn btn-left" (click)="modalMember('Update',item)">Edit</a>
+                            <a class="btn btn-delete" (click)="confirmDelete(item)">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="12">
+                            <mfBootstrapPaginator (click)="selectPage()" [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmDelete" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm delete member</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure delete {{memberChoosed.full_name}} - {{memberChoosed.email}}?
+            </div>
+            <div class="modal-footer">
+                <button class="btn" (click)="deleteMember()">Delete</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddEditModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{typeModal}} Member</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" #f="ngForm">
+                    <div class="form-group">
+                        <label for="name"  class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input [disabled]="typeModal=='Update'" type="text" [(ngModel)]="member.full_name" name="address" required class="form-control" id="name"  #name="ngModel">
+                            <small *ngIf="!name.valid && member.full_name != null && typeModal!='Update'"  class="admin-hospital-message text-danger">Name is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"  class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input [disabled]="typeModal=='Update'" type="text" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" [(ngModel)]="member.email" class="form-control" name="email" id="email" #email="ngModel">
+                            <small *ngIf="!email.valid && member.email != null && typeModal!='Update'" class="admin-hospital-message text-danger">Email is required and format should be <i>john@doe.com.</i>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Role</label>
+                        <div class="col-sm-10">
+                            <select name="role" [(ngModel)]="member.role" class="form-control">
+                                <option value="0">Member</option>
+                                <option value="1">Admin</option>
+                                <option value="4">Report Manager</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h3 class="text-danger text-center">{{err}}</h3>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="typeModal=='Add'" (click)="inviteMember()" [disabled]="!f.valid" class="btn">Add</button>
+                <button *ngIf="typeModal=='Update'" (click)="UpdateMember()" [disabled]="!f.valid" class="btn">Update</button>
+                <button class="btn" (click)="hideModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalGiveToken" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Give token for {{memberChoosed.full_name}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email"  class="col-sm-2 control-label">Token</label>
+                    <div class="col-sm-6">
+                        <input type="number" [(ngModel)]="token" class="form-control" name="token">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="token<=0" class="btn" (click)="giveToken()">Give</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+/* .m-header--fixed .m-body {
+    padding-top: 80px;
+} */
+.fade {
+    opacity: 0;
+    transition: opacity .15s linear; }
+    .fade.in {
+      opacity: 1; }
+      .main-body
+      {
+          padding-top:60px
+      
+      }
+      @media (max-width: 1024px) {
+        .main-body
+      {
+          padding-top:0;
+      
+      }
+    }

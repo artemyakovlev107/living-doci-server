@@ -1,0 +1,41 @@
+<div class="sub-content text-center">
+  <h1 class="">Map Data</h1>
+  <p class="text-title">Map your files to Doc & I.
+    <!-- <span class="red">
+      <i class="fa fa-exclamation-triangle"></i> 6 fields need review</span> -->
+  </p>
+  <div class="scroll-map-data">
+    <div class="content-map-data">
+      <div class="form-data-map">
+        <div class="row sub-title">
+          <label class="col-sm-6 control-label text-trans text-left">doc & i</label>
+          <label class="col-sm-6 control-label text-trans text-left">your fields</label>
+        </div>
+        <div class="row pl-20 mt-10" *ngFor="let f of fields">
+          <div class="col-sm-6 select-upload text-left">
+            <p>{{f}}</p>
+          </div>
+          <div class="col-sm-6 select-upload text-left pd-icon">
+            <div class="check-right">
+              <p>{{f}}</p>
+              <div class="icon-right">
+                <!-- <i class="gray fa fa-chevron-down"></i>
+                <i class="fa fa-question-circle"></i> -->
+                <i class=" green fa fa-check-circle"></i>
+              </div>
+            </div>
+          </div>
+          <div class="content-drop" hidden>
+            <p>Claim Type</p>
+            <p>Claim Type</p>
+            <p>Claim Type</p>
+            <p>Claim Type</p>
+          </div>
+        </div>
+        <div class="btn-right text-right">
+          <button type="button" class="btn btn-success" (click)="nextStep()">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

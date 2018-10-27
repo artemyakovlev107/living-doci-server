@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default navbar-admin" role="navigation" *ngIf="check()">
+    <div class="">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" routerLink="/admin/hospital">Manage Hospital</a>
+        </div>
+        <div class="collapse navbar-collapse  navbar-ex1-collapse">
+            <ul  class="nav navbar-nav navbar-right dropdown">
+                <li class></li>
+                <li class="nav-item profile" style="margin-right:0px" *ngIf="username!=null">
+                    <div class="btn-group nav-text" dropdown>
+                        <a style="padding: 14px 14px 15px;" class="dropdown-item dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true">
+                            <span >{{username}}</span>
+                        </a>
+                        <ul style="background: #3f484d" class="dropdown-menu" dropdownMenu aria-labelledby="lang">
+                            <li><a class="admin-item-dropdown" (click)="logout()">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section>
+    <div class="admin-hospital">
+        <router-outlet></router-outlet>
+    </div>
+</section>

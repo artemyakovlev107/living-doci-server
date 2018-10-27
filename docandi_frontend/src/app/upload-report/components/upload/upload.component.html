@@ -1,0 +1,97 @@
+<div class="sub-content text-center" [hidden]="step != 1">
+  <h1 class="mbt-50">File Uploader</h1>
+  <div class="content text-center flex-uploader no-padding">
+    <div class="uploader">
+      Drag and Drop CSV or Xlsx File to Upload
+      <p class="warning-title">
+        <i class="fa fa-exclamation-triangle" *ngIf="errorText"></i> {{errorText}}</p>
+      <div class="no-boder">
+        <file-drop (onFileDrop)="dropped($event)" [customstyle]="myStyle" (click)="chooseFile()">
+          <i class="fa fa-file icon-file-upload">
+          </i>
+          <input type="file" id="file340b" hidden accept=".xlsx, .csv" (change)="openChooseFile($event)">
+        </file-drop>
+      </div>
+    </div>
+    <p class="warning-title" *ngIf="currentFileName.three40bFile" (click)="step = 3">Return to {{currentFileName.three40bFile}}</p>
+  </div>
+</div>
+<div class="sub-content text-center" [hidden]="step != 2">
+  <div class="progress">
+    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" [attr.aria-valuenow]="progress" aria-valuemin="0"
+      aria-valuemax="100" style="min-width: 2em;" [style.width]="(progress/100)*100 + '%'">
+      {{progress}}%
+    </div>
+  </div>
+  <h1 class="mbt-50">File Uploader</h1>
+  <div class="content text-center">
+    <div>
+      <p class="text-14 mbt-20">Uploading:filename.cvs & filename.cvs</p>
+      <div class="sub-icon">
+        <i class="fa fa-copy icon-file-upload"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sub-content text-center" [hidden]="step != 3">
+  <h1 class="mbt-50">File Uploader</h1>
+  <div class="content text-center">
+    <div>
+      <p class="text-14">Uploaded: {{currentFileName.three40bFile}}</p>
+      <div class="sub-icon">
+        <i class="fa fa-file active icon-file-upload"></i>
+        <i class="fa fa-check-circle icon-check-file"></i>
+      </div>
+      <div class="btn-next">
+        <label *ngIf="!EMRFile && !uploadERM" class="title">{{currentFileName.three40bFile}}</label>
+        <label *ngIf="!EMRFile && uploadERM" class="title" (click)="step=1;currentTypeDrop=2"> Upload Your Electronic Medical Record</label>
+        <!-- <input type="file" id="file" hidden accept=".xlsx, .csv" (change)="addEMRFile($event)"> -->
+         <label *ngIf="EMRFile" class="title" for="file">{{currentFileName.EMRFile}}</label>
+        <button type="button" *ngIf="uploadERM" (click)="upload()" class="btn btn-info">Next</button>
+        <button type="button" *ngIf="!uploadERM" (click)="uploadERM=true" class="btn btn-info">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<div class="modal fade" id="missingModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title">You have uploaded a document which have missing information related to Retail Net Increased Access Dollars . Please
+          re-check the document and re-upload or fill in the data for following field.</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input class="form-control" [(ngModel)]="retail_net_increased_access_dollars" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal" (click)="upload()">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- modal error-->
+<div class="modal fade" id="modal-error" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4 class="modal-title">{{error}}</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>

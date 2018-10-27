@@ -1,0 +1,161 @@
+<div class="login-page animate">
+   <div class="row">
+      <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 container">
+         <h2>Sign Up</h2>
+         <form #f="ngForm" role="form">
+            <div class="form-content col-lg-10 col-lg-offset-1">
+               <div class="form-group">
+                  <input  [(ngModel)]="full_name" #nameView="ngModel" required minlength="6" maxlength="30"  class="form-control input-underline  input-lg" id="first-name" name="fullname" placeholder="Full Name" >
+                    <small *ngIf="!nameView.valid && full_name != null"  class="text-danger">Full Name is required (minimum 6 characters).
+                     </small>
+
+               </div>
+               <div class="form-group">
+                  <input  [(ngModel)]="address" #addressView="ngModel" required minlength="0" maxlength="30"  class="form-control input-underline input-lg" id="last-name" name="address" placeholder="Adress">
+                  <small *ngIf="!addressView.valid && address!=null" class="text-danger">Address is required (minimum 6 characters).
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input  [(ngModel)]="city"  #cityView="ngModel"  required minlength="0" maxlength="30" class="form-control input-underline input-lg" name="city" placeholder="City">
+
+                  <small *ngIf="!cityView.valid && city!=null" class="text-danger">City address is required.
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input  [(ngModel)]="state"  #stateView="ngModel"  required maxlength="30" class="form-control input-underline input-lg"name="state" placeholder="State">
+                  <small *ngIf="!stateView.valid &&state !=null" class="text-danger">State address is required .
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input  [(ngModel)]="zipcode"  #zipcodeView="ngModel"  required  maxlength="30" class="form-control input-underline input-lg" name="zipcode" placeholder="Zip code">
+
+                  <small *ngIf="!zipcodeView.valid && zipcode!=null" class="text-danger">Zipcode is required.
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input  [(ngModel)]="phone" #phoneView="ngModel"  required minlength="6" maxlength="30" class="form-control input-underline input-lg" name="phone" placeholder="Phone Number">
+
+                  <small *ngIf="!phoneView.valid && phone!=null" class="text-danger">Phone number is required.
+                     </small>
+               </div>
+
+               <div class="form-group">
+                  <input  [(ngModel)]="emailAdress" #emailView="ngModel" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" class="form-control input-underline input-lg" id="emailadress" name="username" placeholder="Email Adress">
+                   <small *ngIf="!emailView.valid && emailAdress!=null" class="text-danger"> Email is required and format should be <i>john@doe.com</i>.
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input [(ngModel)]="password" type="password"  #passView="ngModel"  required minlength="6" maxlength="30" class="form-control input-underline input-lg"  name="password" placeholder="Password">
+                  <small *ngIf="!passView.valid && password!=null" class="text-danger"> Password is required (minimum 6 characters).
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input [(ngModel)]="passwordConfirm" type="password" #passConfirmView="ngModel"  required minlength="6" maxlength="30" class="form-control input-underline input-lg" name="passwordConfirm" placeholder="Confirm Password">
+                  <small *ngIf="(!passConfirmView.valid && passwordConfirm!=null) || (passwordConfirm!=password && passwordConfirm!=null)" class="text-danger"> Password confirm is required and match password (minimum 6 characters).
+                     </small>
+               </div>
+               <div class="form-group">
+                  <input [(ngModel)]="hospitalName" #hospitalNameview="ngModel"   required minlength="6" maxlength="30" class="form-control input-underline input-lg" id="hospitalname" name="hospitalname" placeholder="Hospital Name">
+                  <small *ngIf="!hospitalNameview.valid && hospitalName!=null" class="text-danger">Hospital Name is required (minimum 6 characters).
+                     </small>
+               </div>
+               <div class="form-group">
+                  <div class="col-sm-8">
+                     <input type="file" [hidden]="true"  (change)="changeImage($event)" name="file" id="file">
+                     <img  (click)="chooseImage()" id="image" src="https://www.documentree.com/images/yourlogohere.png">
+                  </div>
+               </div>
+            </div>
+            <h3 class="text-danger">{{errorMessage}}</h3>
+            <Button class="btn rounded-btn" [disabled]="!f.valid || passwordConfirm!=password || !Image" (click)="signUp()">Sign Up</Button>
+         </form>
+      </div>
+   </div>
+</div>
+
+<!--pop up add first location-->
+<div class="modal fade" id="Addlocation" role="dialog">
+   <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Add first clinic location</h4>
+         </div>
+         <div class="modal-body">
+            <form class="form-horizontal" #fClinic="ngForm">
+               <div class="form-group">
+                  <label for="address"  class="col-sm-2 control-label">Address</label>
+                  <div class="col-sm-10">
+                     <input type="text" [(ngModel)]="clinicLocation.address" name="addressClinic" required class="form-control" id="address" placeholder="address" #adrClinic="ngModel">
+                     <small *ngIf="!adrClinic.valid && clinicLocation.address != null"  class="text-danger">Address is required.
+                     </small>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="phone"  class="col-sm-2 control-label">Phone</label>
+                  <div class="col-sm-10">
+                     <input type="text" required [(ngModel)]="clinicLocation.phone" class="form-control" name="phoneClinic" id="phone" placeholder="Phone Number" #phoneClinic="ngModel">
+                     <small *ngIf="!phoneClinic.valid && clinicLocation.phone != null"  class="text-danger">Phone number is required.
+                     </small>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="Name" class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-10">
+                     <input type="text" required [(ngModel)]="clinicLocation.name" name="nameClinic" class="form-control" id="Name" placeholder="Name" #nameClinic="ngModel">
+                     <small *ngIf="!nameClinic.valid && clinicLocation.name != null"  class="text-danger">Clinic name is required.
+                     </small>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="Email" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-10">
+                     <input type="text"  [(ngModel)]="clinicLocation.email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" name="emailClinic" class="form-control" id="Email" placeholder="Email" #emailClinic="ngModel">
+                     <small *ngIf="!emailClinic.valid && clinicLocation.email!=null" class="text-danger"> Email is required and format should be <i>john@doe.com</i>.
+                     </small>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="city" class="col-sm-2 control-label">City</label>
+                  <div class="col-sm-10">
+                     <input type="text" [(ngModel)]="clinicLocation.city" name="cityClinic" required class="form-control" id="city" placeholder="City" #cityClinic="ngModel">
+                     <small *ngIf="!cityClinic.valid && clinicLocation.city != null"  class="text-danger">Clinic city is required.
+                     </small>
+                  </div>
+
+               </div>
+               <div class="form-group">
+                  <label for="state" class="col-sm-2 control-label">State</label>
+                  <div class="col-sm-10">
+                     <input type="text"  [(ngModel)]="clinicLocation.state" required name="stateClinic" class="form-control" id="state" placeholder="State" #stateClinic="ngModel">
+                     <small *ngIf="!stateClinic.valid && clinicLocation.state != null"  class="text-danger">Clinic city is required.
+                     </small>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="zip" class="col-sm-2 control-label">Zip Code</label>
+                  <div class="col-sm-10">
+                     <input type="text" [(ngModel)]="clinicLocation.zip" required name="zipClinic" class="form-control" id="zip" placeholder="Zip" #zipClinic="ngModel">
+                     <small *ngIf="!zipClinic.valid && clinicLocation.zip != null"  class="text-danger">Zipcode is required.
+                     </small>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div for="file" class="col-sm-4">
+                     <a class="btn" (click)="chooseImageClinic()">Choose Image</a>
+                     <input type="file" [hidden]="true"  (change)="changeImageClinic($event)" name="fileClinic" id="fileClinic">
+                  </div>
+                  <div class="col-sm-8">
+                     <img  id="imageClinic" src="">
+                  </div>
+               </div>
+            </form>
+         </div>
+         <h3 class="text-danger">{{errorMessage}}</h3>
+         <div class="modal-footer">
+            <button  (click)="getLatLngForAdd(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)" [disabled]="!fClinic.valid || !ImageChoosed" class="btn">Add</button>
+         </div>
+      </div>
+   </div>
+
+</div>

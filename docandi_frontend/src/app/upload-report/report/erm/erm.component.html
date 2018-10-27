@@ -1,0 +1,142 @@
+
+  <div class="container container-sub">
+    <div class="sub-chart">
+      <div class="row">
+        <div class="col-md-4">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label" style="text-align: center">Statement Date</label>
+              <div class="col-sm-8" style="z-index: 10">
+                <ng-datepicker [(ngModel)]="fromDate" (ngModelChange)="changeDate()"  [ngModelOptions]="{standalone: true}"></ng-datepicker>
+                <!-- <input type="date" (change)="changeDate()" class="form-control" [(ngModel)]="fromDate" name="fromdate"> -->
+      
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class=" col-sm-4  control-label">Date Range</label>
+              <div class="col-sm-8">
+                <select class="form-control" [(ngModel)]="range_date" (change)="changeDate()" name="daterange">
+                  <option [value]="1">1 Month</option>
+                  <option [value]="2">2 Months</option>
+                  <option [value]="3">3 Months</option>
+                  <option [value]="4">4 Months</option>
+                  <option [value]="5">5 Months</option>
+                  <option [value]="6">6 Months</option>
+                  <option [value]="7">7 Months</option>
+                  <option [value]="8">8 Months</option>
+                  <option [value]="9">9 Months</option>
+                  <option [value]="10">10 Months</option>
+                  <option [value]="11">11 Months</option>
+                  <option [value]="12">12 Months</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart6">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="admin-metrics-340b-chart-box-1">
+            <!-- <h2 class="admin-metrics-340b-top-title" style="padding-top: 22px; padding-bottom: 10px;">Contract Capture Rate</h2> -->
+            <div id="chart-contract"></div>
+            <!-- <chart [options]="Option"></chart> -->
+            <div class="chart-icon">
+              {{rateContracted}} %
+            </div>
+            <!-- <div class="note-chart">
+                    <div class="note-chart-box">
+                        <div class="box-left blue">
+
+                        </div>
+                        <p class="text">{{rateContracted}}% Contracted ({{contracted}})</p>
+                    </div>
+                    <div class="note-chart-box">
+                        <div class="box-left grey">
+
+                        </div>
+                        <p class="text">{{100 - rateContracted}}% Noncontracted ({{noncontracted}})</p>
+                    </div>
+                </div> -->
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div id="chart-pharmacy"></div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <div class="content-table table">
+      <!-- <table class="table">
+        <thead>
+          <tr>
+            <th>TOTAL</th>
+            <th>PHARMACY</th>
+            <th>QTY</th>
+            <th>ADDRESS</th>
+            <th>CITY</th>
+            <th>CONTRACTED</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pharmacy of pharmacySumary">
+            <td>{{pharmacy.total}}</td>
+            <td>{{pharmacy.pharmacy}}</td>
+            <td><div *ngFor="let item of pharmacy.listStore">{{item.qty}}</div></td>
+            <td><div *ngFor="let item of pharmacy.listStore">{{item.address}}</div></td>
+            <td><div *ngFor="let item of pharmacy.listStore">{{item.city}}</div></td>
+            <td><div *ngFor="let item of pharmacy.listStore">{{item.contracted==1?'Yes':'No'}}</div></td>
+          </tr>
+        </tbody>
+      </table> -->
+      <table [mfData]="pharmacySumary" #mf="mfDataTable" [mfRowsOnPage]="10" class="table">
+        <thead>
+          <tr>
+            <th class="text-center">
+              <!-- <mfDefaultSorter by="total">TOTAL </mfDefaultSorter> -->
+            </th>
+            <th class="text-center">
+              PHARMACY
+            </th>
+            <th class="text-center">
+              QTY
+            </th>
+            <th class="text-center">
+              ADDRESS
+            </th>
+            <th class="text-center">
+              CITY
+            </th>
+            <th class="text-center">
+              CONTRACTED
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td class="text-center">{{item.total}}</td>
+            <td class="text-center">{{item.pharmacy}}</td>
+            <td class="text-center">
+              <div *ngFor="let data of item.listStore">{{data.qty}}</div>
+            </td>
+            <td class="text-center">
+              <div *ngFor="let data of item.listStore">{{data.address}}</div>
+            </td>
+            <td class="text-center">
+              <div *ngFor="let data of item.listStore">{{data.city}}</div>
+            </td>
+            <td class="text-center">
+              <div *ngFor="let data of item.listStore">{{data.contracted==1?'Yes':'No'}}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+

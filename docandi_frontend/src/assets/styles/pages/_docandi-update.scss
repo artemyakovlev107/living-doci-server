@@ -1,0 +1,344 @@
+.home-page-update.home-page .home-page-header {
+  min-height: 200px;
+}
+.home-page-update.home-page .home-page-header h1 {
+  font-weight: 800 !important;
+  color: #5d5d5d;
+}
+.home-page-update.home-page .teal-row {
+  padding: 30px 0px 45px;
+}
+.home-page-update .spacial-list {
+  line-height: 32px;
+  margin-bottom: 41px;
+}
+.home-page-update a, .home-page-update a:hover {
+  text-decoration: none;
+}
+.home-page-btn-play {
+  background-color: transparent;
+  border: 1px solid #3399cc;
+  color: #3399cc;
+  line-height: 20px;
+  margin-top: 15px;
+  padding: 8px 15px 8px 10px;
+}
+.home-page-btn-play:hover {
+  background-color: #3399cc;
+  color: #fff;
+}
+.home-page-btn-play:hover .glyphicon-play {
+  color: #3399cc;
+  background-color: #fff;
+}
+.home-page-btn-play .glyphicon-play {
+  padding: 5px;
+  border-radius: 50%;
+  color: #fff;
+  background-color: #3399cc;
+  font-size: 10px;
+  vertical-align: top;
+  margin-right: 5px;
+  margin-top: -1px;
+}
+.increase-table-row {
+  display: inline-block;
+  float: left;
+}
+.increase-table-left {
+  width: 45%;
+  background-color: #49d2c8;
+  padding: 42px 50px;
+}
+.increase-table-right {
+  width: 55%;
+  background-color: #282c2f;
+  padding: 15px;
+}
+.increase-table {
+  position: relative;
+  width: 100%;
+  border: 1px solid rgba(73,210,200,0.3);
+  overflow: hidden;
+  box-shadow: 0px 0px 10px rgba(33,39,42,0.5);
+}
+.teal-row.teal-row-increase {
+  background-color: #3d474c;
+}
+.teal-row.teal-row-increase h2 {
+  margin-bottom: 60px;
+}
+.increase-table-update-v2.increase-table {
+    border: 0px;
+    box-shadow: none;
+}
+.teal-row.teal-row-increase .increase-table-update-v2 h2 {
+  text-align: left;
+  padding-top: 25px;
+  margin-bottom: 35px;
+}
+.increase-table-update-v2 .increase-table-left,.increase-table-update-v2 .increase-table-right {
+  background-color: transparent;
+  padding: 0px;
+}
+.increase-table-left-list {
+  list-style-type: disc;
+  color: #fff;
+  text-align: left; 
+}
+.increase-table-update-v2 .increase-table-left-list {
+  padding-left: 21px;
+}
+.increase-table-left h4 {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 42px;
+  text-align: left;
+  margin-bottom: 23px;
+}
+.increase-table-input input, .increase-table-input textarea {
+  width: 100%;
+  border: 1px solid #949697;
+  border-radius: 0px;
+  color: #0a0a0d;
+  font-size: 20px;
+  padding: 18px 16px 22px;
+  height: initial;
+  font-weight: 400;
+  resize: none;
+}
+.increase-table-input {
+  padding: 15px;
+}
+.increase-table-input input::-webkit-placeholder, .increase-table-input textarea::-webkit-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(10,10,13, 0.6);
+}
+.increase-table-input input::-moz-placeholder, .increase-table-input textarea::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(10,10,13, 0.6);
+}
+.increase-table-input input:-ms-placeholder, .increase-table-input textarea:-ms-placeholder { /* IE 10+ */
+  color: rgba(10,10,13, 0.6);
+}
+.increase-table-input input:-moz-placeholder, .increase-table-input textarea:-moz-placeholder { /* Firefox 18- */
+  color: rgba(10,10,13, 0.6);
+}
+.increase-table-btn {
+  padding: 0px 15px;
+  text-align: left;
+}
+.increase-table-update-v2 .increase-table-btn {
+  margin-top: 7px;
+}
+.increase-table-btn button {
+  font-weight: 700;
+  font-size: 20px;
+  background-color: #ff5149;
+  border-color: #ff5149;
+  padding: 9px 30px 11px;
+  height: initial;
+  letter-spacing: 1px;
+}
+.docandi-footer-home {
+  background-color: #282c2f;
+  padding: 22px 40px 24px;
+}
+.docandi-footer-home-list {
+  list-style-type: none;
+  margin-bottom: 0px;
+  padding-left: 0px;
+}
+.docandi-footer-home-list li {
+  display: inline-block;
+  font-size: 12px;
+  padding: 0px 5px;
+  color: #999999;
+  line-height: 14px;
+}
+.docandi-footer-home-list a {
+  color: #999999;
+  font-size: 12px;
+}
+.docandi-footer-home-list a.doc {
+  color: #fff;
+  font-size: 14px;
+}
+.docandi-footer-home-list .about {
+  border-right: 1px solid #7b7c7e;
+  padding-right: 6px;
+}
+.healthcare-solutions-form-update.teal-row {
+  background-color: #3e474c;
+  padding-bottom: 60px;
+}
+.healthcare-solutions-form-update.teal-row h2 {
+  padding-top: 4px;
+  margin-bottom: 42px;
+}
+.healthcare-solutions-form-update .increase-table-right {
+  width: 100%;
+  padding-bottom: 23px;
+  min-height: auto;
+}
+.healthcare-solutions-form-update .increase-table-btn {
+  padding: 7px 15px;
+}
+.healthcare-solutions .healthcare-solutions-header .healthcare-solutions-header-content h1 {
+  font-weight: 800 !important;
+  color: #5d5d5d;
+}
+.healthcare-solutions-list {
+  list-style-type: none;
+  padding-left: 0px;
+}
+.healthcare-solutions-update .healthcare-solutions-list {
+  list-style-type: disc;
+  padding-left: 2rem;
+}
+.about-us-update.content-row h2 {
+  font-weight: 800 !important;
+  color: #5d5d5d;
+  font-size: 28px;
+}
+.contact-us-text-list p {
+  margin-bottom: 0px;
+}
+.about-340b-box-1 {
+  background-image: url(/assets/images/healthcare-program.jpg);
+  background-position: 50% 50%;
+  background-size: cover;
+  min-height: 450px;
+}
+.about-340b-box-1-content h1 {
+  font-weight: 800 !important;
+  color: #5d5d5d;
+  text-align: left;
+}
+.about-340b-box-1-content p {
+  font-size: 22px;
+  line-height: 1.6;
+}
+.about-340b-box-1-content {
+  padding: 90px 10px;
+}
+.about-340b .content-row p {
+  font-size: 20px;
+  line-height: 1.4;
+}
+.about-340b-box-3 span.red {
+  color: #ff514b;
+  font-weight: 600;
+}
+.about-340b-box-ipab-right-2 {
+  position: relative;
+}
+.about-340b-box-ipab-right-2-img-logo {
+  width: 100%;
+  text-align: center;
+  margin-top: -55px;
+}
+.about-340b-box-ipab-right-2-img-logo img {
+  width: 60%;
+  max-width: 365px;
+  box-shadow: 2px 0 2px rgba(204,204,204, 0.5), 0 4px 2px rgba(204,204,204, 0.5), -2px 0 2px rgba(204,204,204, 0.5);
+  border-radius: 0px;
+}
+.about-340b-box-ipab-right-2-content {
+  position: relative;
+  max-width: 654px;
+}
+.healthcare-solutions img {
+  width: auto !important;
+  max-width: 100%;
+}
+.home-page .box.box-update {
+  padding: 10px 30px 30px;
+  background-color: #fff;
+}
+@media (max-width: 992px) {
+  .home-page-update .col-xs-12 {
+    margin-left: 0px;
+  }
+  .home-page-update.home-page .teal-row-increase {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+@media (min-width: 768px) {
+  .home-page-update.home-page .home-page-header {
+    min-height: 450px;
+  }
+  .home-page-update.home-page .home-page-header .home-page-header-content {
+    padding: 120px 20px;
+  }
+  .home-340b-content .col-xs-12 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .increase-table-right, .increase-table-left {
+    min-height: 490px;
+  }
+  .increase-table-update-v2 .increase-table-right,.increase-table-update-v2 .increase-table-left {
+    min-height: 430px;
+  }
+  .increase-table-update-v2.increase-table {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+}
+@media (min-width: 1200px) {
+  .about-340b-box-3 {
+    padding-top: 85px;
+  }
+}
+@media (max-width: 767px) {
+  .increase-table-right, .increase-table-left { 
+    width: 100%;
+  }
+  .docandi-footer-home {
+    padding: 22px 15px 24px;
+  }
+}
+@media (min-width: 992px) {
+  .about-us-update.white-row {
+    padding: 60px;
+  }
+  .content-row-content-left {
+    padding-right: 30px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) { 
+  .about-340b-box-ipab-left-1, .about-340b-box-ipab-right-2 {
+    width: 25%;
+    margin-left: 0px;
+  }
+  .about-340b-box-ipab-left-2, .about-340b-box-ipab-right-1 {
+    width: 75%;
+    margin-left: 0px;
+  }
+}
+@media (min-width: 1400px) {
+  .content-right-col-1 .content-box-top .info-job {
+    padding-right: 250px;
+    position: relative;
+  }
+  .info-job-image-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    height: 180px;
+    margin-top: -90px;
+    width: 230px;
+  }
+  .info-job-image-right img {
+    width: 100%;
+    height: 100%;
+  }
+  .content-right-col-1 .content-box-top .info-job .img {
+    left: 40px;
+  }
+}
+@media (max-width: 1400px) {
+  .info-job-image-right {
+    display: none;
+  }
+}

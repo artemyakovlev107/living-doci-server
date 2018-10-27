@@ -1,0 +1,1007 @@
+
+  <div class="dandi__boxmap__search" *ngIf="showMap">
+    <div class="row">
+      <div class="box-view-fullmap">
+        <div class="button-show-map" (click)="directionMapMenu()">
+          <img src="assets/images/icon-showmap.png" class="show-map-btn-img"/>
+        </div>
+        <div class="slide-bar-left" style="overflow-y: scroll">
+          <div [ngClass]="!direction?'search':'direction-search'">
+            <div class="form-group m-form__group searchform" id="searchForm">
+                <label>Patient ZIP code</label>
+                <div class="row">
+                  <div class="col-11">
+                    <form (keydown)="onEnter($event.keyCode)" class="m-form m-form--fit m-form--label-align-right " >
+
+                      <input class="form-control pharmacy-address-input" name="search_location" id="searchKey" ng2-auto-complete [source]="listClinicLocation"
+                      placeholder="Enter current pharmacy or zipcode" value-property-name="none" display-property-name="address"
+                      [(ngModel)]="selectedAdress" style="width: 100%">
+                    
+                    </form>
+                  </div>
+                  <div class="col-1">
+                    <button class="btn btn-info" type="submit" (click)="search(selectedAdress)"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+             </div>
+          </div>
+          <div class="map-content" >               
+            <div class="map-fillter-content">   
+              <div class="map-fillter-content-select row">
+                <div class="map-fillter-content-list col-8">
+                    <p class="map-fillter-content-text-number">{{contractedPharmacies.length}} Contract Pharmacies</p>
+                </div>
+                <div class="map-fillter-content-list col-4">
+                    <select [(ngModel)]="sortType" (change)="sort()" class="form-control">
+                    <option value="distance">Distance <i class="m-menu__hor-arrow la la-angle-down" ></i></option>
+                    <option value="features">Features <i class="m-menu__hor-arrow la la-angle-down" ></i></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered" style="margin-bottom: 0;">
+                <div class="m-portlet__head">
+                  <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                      <h3 class="m-portlet__head-text">
+                       Recommended Pharmacies
+                      </h3>
+                    </div>			
+                  </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div *ngFor="let clinic of contractedPharmacies;let i=index" (click)="setCenterMap(clinic)" (click)="choosePhamarcy(clinic.id,i); questions.q2 = clinic.id ; clinic.isAgreeToChange = ''" >
+                        <div *ngIf="i<3" [ngClass]="clinic.id == selectedItem?'map-content-item map-selected':'map-content-item'" class="container phar-item"> 
+                            <!-- <a *ngIf="clinic.id == selectedItem" class="map-switching">{{itemStatus}}</a> -->
+                            <div class="row">
+                              <div class="col-1 " >
+                                  <label class=" phar-item-status  m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                      <a class="map-switching" *ngIf="clinic.id == selectedItem"><span class="m-badge m-badge--info"></span></a>
+                                      <a class="map-switching" *ngIf="clinic.id != selectedItem"><span class="m-badge m-badge--secondary"></span></a>
+                                  </label>
+                              </div>
+                              <div class="col-11" >
+                                  <p >{{clinic.name}} - {{clinic.address}}</p>
+                                  <div class="map-content-item-select row">
+                                    <div class="map-content-item-text col-xs-5">
+                                      <p class="rec-phar-distance">{{clinic.distance}} miles away</p>
+                                    </div>
+                                    <div class="map-content-item-list col-xs-7">
+                                      <ul class="icon_menu">
+                                        <li *ngIf="!clinic.sync">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/sync-small.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="clinic.sync">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/sync-small-blue.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="!clinic.delivery">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/delivery-small.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="clinic.delivery">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/delivery-small-blue.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="!clinic.drivethu">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/drive-thru-small.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="clinic.drivethu">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/drive-thru-small-blue.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="!clinic.hours24">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/hours-small.jpg">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="clinic.hours24">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/hours-small-blue.jpg">
+                                          </a>   
+                                        </li>
+                                        <li *ngIf="!clinic.Uninsured">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/uninsured-small.png">
+                                          </a>
+                                        </li>
+                                        <li *ngIf="clinic.Uninsured">
+                                          <a href="javascript:void(0)">
+                                            <img src="assets/images/uninsured-small_active.png">
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>  
+                              </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="m-portlet__body">
+                  <div *ngFor="let clinic of contractedPharmacies;let i=index" (click)="choosePhamarcy(clinic.id,i); questions.q2 = clinic.id; clinic.isAgreeToChange = ''">
+                    <div *ngIf="i>=3"  [ngClass]="clinic.id == selectedItem?'map-content-item map-selected':'map-content-item'" (click)="setCenterMap(clinic)" class="container phar-item" >
+                      <div class="row">
+                          <div class="col-1"  >
+                              <label class="phar-item-status m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                  <a class="map-switching" *ngIf="clinic.id == selectedItem"><span class="m-badge m-badge--info"></span></a>
+                                  <a class="map-switching" *ngIf="clinic.id != selectedItem"><span class="m-badge m-badge--secondary"></span></a>
+                              </label>
+                          </div>
+                          <div class="col-11">
+                              <a *ngIf="clinic.id == selectedItem" class="map-switching">{{itemStatus}}</a>
+                              <p >{{clinic.name}} - {{clinic.address}}</p>
+                              
+                              <div class="map-content-item-select row">
+                                <div class="map-content-item-text col-xs-5">
+                                  <p class="rec-phar-distance">{{clinic.distance}} miles away</p>
+                                </div>
+                                <div class="map-content-item-list col-xs-7">
+                                  <ul>
+                                    <li *ngIf="!clinic.sync">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/sync-small.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="clinic.sync">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/sync-small-blue.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="!clinic.delivery">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/delivery-small.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="clinic.delivery">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/delivery-small-blue.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="!clinic.drivethu">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/drive-thru-small.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="clinic.drivethu">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/drive-thru-small-blue.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="!clinic.hours24">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/hours-small.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="clinic.hours24">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/hours-small-blue.jpg">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="!clinic.Uninsured">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/uninsured-small.png">
+                                      </a>
+                                    </li>
+                                    <li *ngIf="clinic.Uninsured">
+                                      <a href="javascript:void(0)">
+                                        <img src="assets/images/uninsured-small_active.png">
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>  
+              </div>
+            </div>
+            <!-- <div class="m-portlet__foot m-portlet__foot--fit" style="padding: 15px 0 10px 0">
+                <div class="m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3 m--align-left">
+                            <a (click)="answerQuestion(1, 'answer-no')" class="btn btn-secondary m-btn m-btn--custom m-btn--icon" >
+                            <span>
+                            <i class="la la-arrow-left"></i>&nbsp;&nbsp;
+                            <span>Back</span>
+                            </span>
+                            </a>
+                        </div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-3 m--align-right">
+                            <a  class="btn btn-info m-btn m-btn--custom m-btn--icon"  (click)="setTimeStep(2);submitSurvey()" style="color:#fff">
+                            <span>
+                            <span>Continue</span>&nbsp;&nbsp;
+                            <i class="la la-arrow-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                        <div class="col-lg-1"></div>
+                    </div>
+                </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="content-right" style="position: relative">
+             
+            <div id ="over-filter">
+                <ul class="map-list-tab">
+                  <li *ngIf="filterall" class="filter-option active-border">
+                    <a href="javascript:void(0)" (click)="changeFilter(0)" class="filter-item">
+                      <span class="images">
+                        <img src="assets/images/results-blue.jpg">
+                      </span>
+                      <span class="filter-text">All</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="!filterall" class="filter-option">
+                    <a href="javascript:void(0)" (click)="changeFilter(0)">
+                      <span class="images">
+                        <img src="assets/images/results.jpg">
+                      </span>
+                      <span class="filter-text">All</span>
+                    </a>    
+                  </li>  
+                  <!-- <li *ngFor="let item of listBenefit" [className]="item.id==currentFilter ? 'filter-option active-border' : 'filter-option'">
+                    <a href="javascript:void(0)" (click)="changeFilter(item.id)" [class.active]="item.id==currentFilter">
+                      <span class="images">
+                        <img [src]="item.id==currentFilter?item.image_active_url:item.image_url">
+                      </span>
+                      <span class="filter-text">{{item.name}}</span>
+                    </a>    
+                  </li>         -->
+                  <li *ngIf="filterhours" class="filter-option active-border">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[0].id)" class="filter-item">
+                      <span class="images">
+                        <img [src]="listBenefit[0].image_active_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[0].name}}</span>
+                    </a>      
+                  </li>  
+                  <li *ngIf="!filterhours" class="filter-option">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[0].id)">
+                      <span class="images">
+                        <img [src]="listBenefit[0].image_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[0].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="filterdrive" class="filter-option active-border">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[1].id)" class="filter-item">
+                      <span class="images">
+                        <img [src]="listBenefit[1].image_active_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[1].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="!filterdrive" class="filter-option">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[1].id)">
+                      <span class="images">
+                        <img [src]="listBenefit[1].image_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[1].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="filterdelivery" class="filter-option active-border">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[2].id)" class="filter-item">
+                      <span class="images">
+                        <img [src]="listBenefit[2].image_active_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[2].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="!filterdelivery" class="filter-option">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[2].id)" >
+                      <span class="images">
+                        <img [src]="listBenefit[2].image_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[2].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="filtersync" class="filter-option active-border">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[3].id)" class="filter-item">
+                      <span class="images">
+                        <img [src]="listBenefit[3].image_active_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[3].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="!filtersync" class="filter-option">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[3].id)" >
+                      <span class="images">
+                        <img [src]="listBenefit[3].image_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[3].name}}</span>
+                    </a>      
+                  </li>  
+                  <li *ngIf="filterself" class="filter-option active-border">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[4].id)" class="filter-item">
+                      <span class="images">
+                        <img [src]="listBenefit[4].image_active_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[4].name}}</span>
+                    </a>    
+                  </li>  
+                  <li *ngIf="!filterself" class="filter-option">
+                    <a href="javascript:void(0)" (click)="changeFilter(listBenefit[4].id)">
+                      <span class="images">
+                        <img [src]="listBenefit[4].image_url">
+                      </span>
+                      <span class="filter-text">{{listBenefit[4].name}}</span>
+                    </a>   
+                  </li>  
+                  <li class="all-results return-script">     
+                      <div class="comment-340b" [class.active]="!showMap" (click)="openModal()">
+                          <img class="img-active" src="assets/images/comment-png-31.png">
+                          <img class="img" src="assets/images/comment-png-32.png">
+                      </div>
+                  </li>
+                  <app-tooltip *ngIf="pageView=='map' && stepView ==2"></app-tooltip>
+                </ul>
+            </div>
+            <div id="agm-map">
+                <agm-map [latitude]="latitude" [longitude]="longitude" [zoomControl]="disabled" [scrollwheel]="false" [zoom]=12>        
+                    <agm-marker [latitude]="currentLocation.latitude" [longitude]="currentLocation.longitude" [label]="" [iconUrl]="'assets/images/hospital_location.png'">
+                      <agm-info-window class="clearfix">
+                        <strong>{{currentLocation.name}}</strong>
+                        <div>{{currentLocation.address}} - {{currentLocation.city}}</div>
+                      </agm-info-window>
+                    </agm-marker>
+                    <agm-marker [latitude]="latitude" [longitude]="longitude" [label]="" [iconUrl]="'assets/images/map-marker.png'"
+                      [visible]="!isClinic">
+                    </agm-marker> 
+                    <agm-marker (markerClick)="choosePhamarcy(clinic.id,i); clinic.isAgreeToChange = ''; questions.q2 = clinic.id"
+                      *ngFor="let clinic of contractedPharmacies;let i=index" [latitude]="clinic.latitude" [longitude]="clinic.longitude"
+                      [label]="" [iconUrl]=" i < 3 ? 'assets/images/owl-star.png' : 'assets/images/doc_and_i_icon_sm.png'">
+                      <agm-info-window [isOpen]="clinic.id==selectedItem" class="clearfix">
+                        <div class="walgreen">
+                          <div class="walgreen-content">
+                            <div class="walgreen-left">
+                              <img src="{{clinic.logo}}">
+                            </div>
+                            <div class="walgreen-right">
+                              <div class="walgreen-right-content">
+                                <h4 class="walgreen-text"><b>{{clinic.name}}</b> - {{clinic.address}}</h4>
+                                <div class="walgreen-text">
+                                  <p>{{clinic.city}},{{clinic.state}} {{clinic.zip}}</p>
+                                </div>
+                                <div class="walgreen-footer-btn">
+                                  <button class="btn btn-info next-step-btn" *ngIf="showNextStepBtn" type="button" (click)="openModal(); doNextStep(i);">Agreed to Switch</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </agm-info-window>
+                    </agm-marker>
+                  </agm-map>
+            </div>
+        </div> 
+      <div class="col-md-9 col-sm-8 col-xs-12">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<!-- id="startmodal"  -->
+<div class="modal fade" role="dialog" id="startmodal" data-backdrop="static" data-keyboard="false" >
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div>
+            <div   class="btn-new">
+                <a (click)="newSurvey()" href="javascript:void(0)">
+                  <span class="btn-white btn btn-rounded ">
+                    <img src="assets/images/svg/icon-new-patient.svg">New</span>
+                </a>
+                <a data-dismiss="modal">
+                    <span class="btn-white btn btn-rounded">
+                      <i class="la la-close"></i></span>
+                  </a>
+                </div>
+            </div>
+          <div class="modal-body">
+              
+              <!--  -->
+              <div id="tabs-start" *ngIf="['start','answer-yes','answer-no'].indexOf(currentTab) > -1 ">
+                  <label class="cap-question" >Is the patient using a contract pharmacy?</label>
+                  <div class="form-group m-form__group">    
+                    <button [disabled]="showLoading" [ngClass]="{'active':(currentTab == 'answer-yes')}"
+                    (click)="answerQuestion(1, 'answer-yes')" class="btn btn-secondary btn-lg m-btn	m-btn m-btn--icon cap-btn" >
+                      <span>
+                          <span class="m-badge m-badge--secondary" [ngClass]="{'btn_span':(currentTab == 'answer-yes')}"></span>
+                        <span>Yes</span>
+                      </span>
+                    </button>
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <button [ngClass]="{'active':(currentTab == 'answer-no')}" (click)="answerQuestion(1, 'answer-no')" class="btn btn-secondary btn-lg m-btn m-btn m-btn--icon cap-btn">
+                      <span>
+                          <span class="m-badge m-badge--secondary" [ngClass]="{'btn_span':(currentTab == 'answer-no')}"></span>
+                        <span>No</span> 
+                      </span>
+                    </button>
+                  </div>
+              </div>
+              <div *ngIf="currentTab == 'start'" id="start">
+                 <div class="form-group m-form__group" style=" margin-bottom: 40px" id="searchpharmacy">
+                    <h4 style="padding-left:30%; padding-top:10px;font-weight: 600">Contract Pharmacies</h4>
+                    <label for="inputaddress" class="cap-question">Search pharmacy </label>
+                    <input class="form-control m-input search-box" ng2-auto-complete [source]="allPharmacies" placeholder="Enter address or name of current pharmacy" value-property-name=null
+                              display-property-name="address" [(ngModel)]="selectedPhar" (ngModelChange)="choosePharSearch()" id="inputaddress"/>
+                  </div>
+
+                  <div class="m-accordion m-accordion--bordered m-accordion--solid" id="accordion" role="tablist">  
+                      <!--begin::Item-->              
+                      <div class="m-accordion__item" *ngFor="let item of groupPhar; let pharmacyIdx = index">
+                          <div class="m-accordion__item-head collapsed"  data-parent="#accordion" role="tab" data-toggle="collapse" [attr.href]="'#pharmacy-city-' + pharmacyIdx" >
+                              <span class="m-accordion__item-title">{{item.city}}</span>
+                                   
+                              <span class="m-accordion__item-mode"></span>     
+                          </div>
+  
+                          <div class="m-accordion__item-body collapse" [attr.id]="'pharmacy-city-' + pharmacyIdx"  > 
+                              <div class="m-accordion__item-content" *ngFor="let p of item.Data" [class.choosed]="p[0]===choosed">
+                                        <a (click)="choosePhar(p[0])">{{p[3]}} - {{p[1]}} - {{p[2]}} - {{item.city}}</a>
+                              </div>
+                          </div>
+                      </div>
+                      <!--end::Item-->                   
+  
+                  </div>
+              </div>
+              <div *ngIf="currentTab == 'answer-yes'">  
+                  <div class="form-group m-form__group">
+                      <label for="inputresult5" class="cap-question">Search Pharmacy</label>
+                      <!-- <input class="form-control m-input search-box" ng2-auto-complete [source]="allPharmacies" placeholder="select pharmacy" value-property-name="zip"
+                      display-property-name="address" [(ngModel)]="selectedPhar"  id="inputresult"/> -->
+                      <select [(ngModel)]="questions.q2" class="form-control m-input" id="inputresult5">
+                          <option value="0">Select A Pharmacy</option>
+                          <option value="{{p.id}}" [ngValue]="selectedPhar" *ngFor="let p of allPharmacies"> {{p.name}} - {{p.address}}
+                          </option>
+                      </select>
+                  </div>  
+                  <br>                          
+                  <div class="form-group m-form__group">
+                      <div class="m-portlet__body" style="border-top:#00c5dc solid 5px; box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.05000000074505806);">
+                          <h4 style="font-weight: 600; font-size:1.4rem">Thank the Patient!</h4>
+                          <p style="font-weight: 600"><span style="color: #36a3f7">This</span>  is a contract pharmacy!</p>
+                          
+                          <ul class="benefit">
+                            <div [innerHTML]="introduction"></div>
+                          </ul>
+                        </div>
+                  </div>
+
+                  <div class="form-group m-form__group">
+                      <label class="m-checkbox">
+                        <input id="card" type="checkbox" name="checkbox1" [(ngModel)]="sendCard"> Include 340B Savings Card for Uninsured
+                        <span></span>
+                      </label>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="form-group m-form__group">
+                      <button type="button" class="btn btn-info btn-block"  (click)="setTimeStep(2);submitSurvey()" [disabled]="!questions.q2 || textSending">Continue</button>
+                   </div>
+              </div>
+              <div *ngIf="currentTab == 'answer-no'">  
+                  <!-- <div class="form-group m-form__group">
+                      <label for="inputresult" class="cap-question">Search Pharmacy</label>
+                      <input class="form-control m-input search-box" ng2-auto-complete [source]="allPharmacies" placeholder="select pharmacy" value-property-name="zip"
+                      display-property-name="address" [(ngModel)]="selectedPhar"  id="inputresult4" disabled/>
+                  </div>   -->
+                  <br>  
+                  <br>                        
+                  <div class="form-group m-form__group">
+                      <div class="m-portlet__body" style="border-top:#f4516c solid 5px; box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.05000000074505806);">
+                        <h4 style="font-weight: 600; font-size:1.4rem">Please inform patient of the benefits of using a partner pharmacy</h4>
+                        <ul class="benefit" style="margin-top:0;  padding: 10px 10px 0 30px;">
+                          <div [innerHTML]="introduction"></div>
+                        </ul>
+                      </div>
+                  </div>
+                  <!-- <div class="form-group m-form__group">
+                      <label class="m-checkbox">
+                        <input id="card_2" type="checkbox" name="checkbox_2"  [(ngModel)]="questions.q5"> I have informed patient of the participating pharmacy locations and corresponding benefits of pharmacies
+                        <span></span>
+                      </label>
+                  </div> -->
+
+                  <div class="form-group m-form__group continue-answer-no">
+                      <button type="button" data-dismiss="modal" class="btn btn-info btn-block" (click)="openMap(); showNextStepBtn = true" >Continue to Map to View Contract Pharmacies</button>
+                   </div>
+              </div>
+    
+              <div *ngIf="['ask-change','yes-change','no-change'].indexOf(currentTab) > -1 "> 
+                  <label class="cap-question">Did the patient agree to change?</label>
+                  <div class="form-group m-form__group">    
+                    <button [ngClass]="{'active':(currentTab == 'yes-change')}" (click)="answerQuestion(6, 'yes-change')"  class="btn btn-secondary btn-lg m-btn	m-btn m-btn--icon cap-btn" >
+                      <span>
+                          <span class="m-badge m-badge--secondary"  [ngClass]="{'btn_span':(currentTab == 'yes-change')}"></span>
+                        <span>Yes</span>
+                      </span>
+                    </button>
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <button [ngClass]="{'active':(currentTab == 'no-change')}" (click)="answerQuestion(6, 'no-change')" class="btn btn-secondary btn-lg m-btn m-btn m-btn--icon cap-btn">
+                      <span>
+                          <span class="m-badge m-badge--secondary"  [ngClass]="{'btn_span':(currentTab == 'no-change')}"></span>
+                        <span>No</span>
+                      </span>
+                    </button>
+                  </div>
+              </div>
+              <div *ngIf="currentTab == 'yes-change'">
+                  <app-tooltip *ngIf="pageView=='back-to-script' && stepView ==1"></app-tooltip>
+                  <app-tooltip *ngIf="pageView=='back-to-script' && stepView ==2"></app-tooltip>
+                  <div class="form-group m-form__group">
+                      <label for="inputresult2" class="cap-question">Selected Contract Pharmacy<span>
+                        <label class="m-checkbox" style="margin-left: 40px;">
+                          <input  type="checkbox" name="checkbox_79"  [(ngModel)]="sendPhar" > Send patient name and address
+                          <span></span>
+                        </label>
+                      </span></label>
+                            
+                      <select [(ngModel)]="questions.q2"  class="form-control m-input">
+                        <option value="0">Select A Pharmacy</option>
+                        <option value="{{p.id}}" *ngFor="let p of allPharmacies">
+                          {{p.name}} - {{p.address}} 
+                        </option>
+                     </select>
+                      <!-- <input class="form-control m-input search-box" ng2-auto-complete [source]="allPharmacies" placeholder="select pharmacy" value-property-name="zip"
+                      display-property-name="address" [(ngModel)]="selectedPhar"  id="inputresult2"/> -->
+                  </div>
+                  <!-- <div class="row">
+                      <input class="col-sm-1" type="checkbox"  [(ngModel)]="sendPhar">
+                      <label class="col-sm-10"> Include address and name pharmacy</label>
+                    </div> -->
+              
+                  <div class="form-group m-form__group">
+                    <div class="m-portlet__body" style="border-top:#36a3f7 solid 5px; box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.05000000074505806);">
+                        <h5 style="font-weight: 600;">Great! Please update the patient's preferred pharmacy in the Electronic Health Record (EHR)</h5>
+                        <div class="form-group m-form__group">
+                            <label class="m-checkbox">
+                              <input type="checkbox" name="checkbox_71" id= "updated-Pharmacy" [(ngModel)]="questions.q8"> I updated the preferred pharmacy in the Electronic Health Record
+                              <!-- [(ngModel)]="questions.q5" -->
+                              <span></span>
+                            </label>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group" style="padding-bottom: 0px;">
+                      <label class="m-checkbox">
+                        <input  type="checkbox" name="checkbox_72"  [(ngModel)]="questions.q10" > I informed the patient of Freedom of Choice
+                        <span></span>
+                      </label>
+                  </div>
+                  <div class="form-group m-form__group row intial-form">
+                      <div class="col-5">
+                        <label>Patient Intials</label>
+                        <input type="email" class="form-control m-input" name="email_patient" [disabled]="!questions.q10" [(ngModel)]="patient_intials">  
+                      </div>
+                      <div class="col-5">
+                        <label class="">Date</label>
+                        <input type="date" class="form-control m-input" name="date" [(ngModel)]="today" [disabled]="!questions.q10">
+                    
+                      </div>
+                   </div>
+                   <div class="form-group m-form__group" style=" 
+                   padding-bottom: 0px;">
+                      <label class="m-checkbox">
+                        <input  type="checkbox" name="checkbox_73" [(ngModel)]="sendCard"> Include 340B Savings Card for Uninsured
+                        <span></span>
+                      </label>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <button type="button" class="btn btn-info btn-block" (click)="setTimeStep(2);submitSurvey()"  [disabled]="!patient_intials || !questions.q10 || textSending || questions.q2=='0'" >Submit</button>
+                  </div>
+              </div>
+              <div *ngIf="currentTab == 'no-change'" >
+                  <div class="form-group m-form__group">
+                      <label for="agreeno" class="cap-question">Why not?</label>
+                      <select [(ngModel)]="questions.q11" class="form-control m-input" name="agreeno">
+                          <option value="0">Select A Reason</option>
+                          <option value="{{reason.id}}" *ngFor="let reason of reasons">{{reason.name}}
+                          </option>
+                      </select>    
+                  </div>  
+                  <div class="form-group m-form__group" *ngIf="questions.q11=='-1'">
+                      <label for="enterreason" class="cap-question">Enter Reason</label>
+                      <input name ="enterreason" [(ngModel)]="questions.reason" type="text" class="form-control m-input" placeholder="Enter Reason">
+                      <br/>
+                  </div> 
+                  <div class="form-group m-form__group submit-btn">
+                      <button type="button" class="btn btn-info btn-block" (click)="submitSurveyNoChange()" [disabled]="questions.q11=='0' || textSending" >Submit</button>
+                  </div>
+              </div>
+              <div *ngIf="currentTab == 'submitted'">
+                  <div *ngIf="!sendCard && !sendPhar" >
+                    <app-tooltip *ngIf="pageView=='card' && stepView ==0"></app-tooltip>
+                        <section class="col-sm-offset-5 col-sm-2">    
+                          <div  class="submitted">
+                              <img src="assets/images/new_images/cp_submitted.png" style="max-width: 100%; height: auto;">
+                              <br><p></p>
+                              <h2 style="margin-left:-30px;"><b>Submitted!</b></h2>
+                              <br>
+                              <a href="javascript:void(0)" [routerLink]="['/dashboard/home/overview']" class="btn btn-info m-btn m-btn--custom" style="width:200px; height: 40px;margin-left:-60px;">Return to Dashboard</a>
+                          </div>
+                        </section>
+                    </div>
+                  <div *ngIf="sendCard || sendPhar" >
+                    <div class="form-group m-form__group" >
+                      <div class="m-portlet__body" style="border-top:#36a3f7 solid 5px; box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.05000000074505806);">                     
+                            <div  class="" style="display: inline-block; padding-left:25%;">
+                                <h2><img src="assets/images/new_images/cp_submitted.png" style="width: 30px; height: auto; text-align: center; align-self:center;">&nbsp;
+                              <b>Submitted!</b></h2>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div *ngIf="sendCard || sendPhar" >
+                    <label class="cap-question">Preferred Contact</label>
+                    <div class="form-group m-form__group" >    
+                      <button  (click)="toSMS()" class="btn btn-secondary btn-lg m-btn	m-btn m-btn--icon cap-btn" [ngClass]="{'active': typeSend=='sms'}">
+                        <span>
+                            <span class="m-badge m-badge--secondary" [ngClass]="{'btn_span': typeSend=='sms'}"></span>
+                          <span>Text</span>
+                        </span>
+                      </button>
+                      &nbsp; &nbsp; &nbsp; &nbsp;
+                      <button  (click)="toEmail()" class="btn btn-secondary btn-lg m-btn m-btn m-btn--icon cap-btn" [ngClass]="{'active': typeSend=='email'}">
+                          <!-- [class.btn-grey-blue]="typeSend!='sms'" -->
+                        <span>
+                            <span class="m-badge m-badge--secondary" [ngClass]="{'btn_span': typeSend=='email'}"></span>
+                          <span>Email</span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- <div *ngIf="sendCard || sendPhar" class="row text-xs-center"> -->
+                  <div *ngIf="sendCard" class="form-group m-form__group" style="padding-top:30px">                     
+                      <label for="contactInfo">Patient Name
+                      </label>
+                      <input  name="contactInfo"  class="form-control m-input" placeholder="Patient's Name" [(ngModel)]="patientName">
+                      <small style="position:relative" *ngIf="patientName=='' || patientName==null" class="text-danger"> Patient's Name is required.</small>
+            
+                  </div>
+                  <div *ngIf="sendCard || sendPhar">
+                    <form (keyup.enter)="login()" #f="ngForm">
+                        <div class="form-group m-form__group">
+                          
+                            <div *ngIf="typeSend=='sms'">
+                              <label for="phone">Patient Phone
+                              </label>
+                              <input [(ngModel)]="phoneNumber" #sms="ngModel" required pattern="^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$"
+                                name="sms" class="col-sm-12" placeholder="Enter Phone Number" name="phone" class="form-control m-input">
+                              <small *ngIf="!sms.valid && phoneNumber!=null && typeSend=='sms'" class="text-danger"> Phone number is required and format should be
+                                <i>1234467890</i>
+                              </small>
+                            </div>
+                            <div *ngIf="typeSend=='email'">
+                              <label for="email1">Patient Email
+                              </label>
+                              <input [(ngModel)]="patientEmail" #email="ngModel" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" name="email1"
+                                class="col-sm-12" placeholder="Patient's Email Address"  class="form-control m-input">
+                              <small *ngIf="!email.valid && patientEmail!=null && typeSend=='email'" class="text-danger"> Email is required and format should be
+                                <i>john@doe.com</i>
+                              </small>
+                            </div>
+                        </div>
+                        <br/>
+                     
+                        <div class="form-group m-form__group">
+                            <label class="m-checkbox"  *ngIf="typeSend=='sms'">
+                                <input id="text-consent" name="text-consent" type="checkbox" [(ngModel)]="checkbox2"> 
+                                Patient has verbally consented to sharing phone number and receiving text message(s) from Doc &
+                                    I 
+                                  <span></span>
+                            </label>
+                            <label *ngIf="typeSend!='sms'" class="m-checkbox">
+                                <input id="text-consent" name="text-consent" type="checkbox" [(ngModel)]="checkbox2"> 
+                                Patient has verbally consented to sharing email address and receiving email(s) from Doc & I 
+                                <span></span>
+                            </label>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="form-group m-form__group">
+                          <!-- <button type="button" (click)="setTimeStep(2);submitSurvey()" [disabled]="!questions.q10 || textSending||questions.q2=='0'" class="btn btn-info btn-block" >Continue</button> -->
+                          <h3 *ngIf="textSending" class="text-success" style="font-size: 1.2rem">sending...</h3>
+                          <label class="text-danger" style="font-size: 1.4rem">{{errorMessage}}</label>
+                          <button *ngIf="typeSend=='sms'" type="button"  [disabled]="!f.valid || !checkbox2 ||textSending" class="btn btn-info btn-block" (click)="sendText()">Text Card
+                          </button>
+                          <button *ngIf="typeSend=='email'"  type="button"  [disabled]="!f.valid || !checkbox2 ||textSending" class="btn btn-info btn-block" (click)="sendEmail()">Email Card
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="currentTab == 'submitted'">
+      <div *ngIf="!sendCard && !sendPhar" >
+    <app-tooltip *ngIf="pageView=='card' && stepView ==0"></app-tooltip>
+          <section class="col-sm-offset-5 col-sm-2">    
+            <div  class="submitted">
+                <img src="assets/images/new_images/cp_submitted.png" style="max-width: 100%; height: auto;">
+                <br>
+                <p></p>
+                <h2><b>Submitted!</b></h2>
+                <br>
+                <a href="javascript:void(0)" [routerLink]="['/dashboard/home/overview']" class="btn btn-info m-btn m-btn--custom" style="width:200px; height: 40px;">Return to Dashboard</a>
+            </div>
+          </section>
+      </div>
+  </div>
+  <style>
+    .ng2-auto-complete {
+      top: 40px !important;
+    }
+    .dandi__boxmap__search .row{
+      padding-top: 1px;
+    }
+    .map-content-item-list ul {
+      list-style-type: none;
+      text-align: right; 
+    }
+    .m-portlet__head{
+      height: 32px;
+    }
+
+   .map-content-item-list ul li {
+      display: inline-block;
+      padding: 0px 6px;
+      vertical-align: middle; 
+    }
+    
+    .show-map-btn-img{
+      width: 70px;
+    }
+    .m-portlet__body{
+      padding: 1.2rem 1.6rem 0.8rem 1.6rem;
+    }
+ 
+    .cap-btn{
+      padding: 1.1rem 1.25rem;
+      width: 170px;
+      height:50px;
+    }
+    .cap-btn:hover{
+      color: #fff;
+      background-color: #36a3f7;
+    }
+    /* .cap-btn:active{
+      color: #fff;
+      background-color: #36a3f7;
+    } */
+    .cap-btn:focus{
+      color: #fff;
+      background-color: #36a3f7;
+    }
+    .cap-btn:visited{
+     
+      background-color: #36a3f7;
+    }
+    .allpharmacy-list{
+      width:360px;
+    }
+   .cap-question{
+     font-size: 1.0rem;
+     margin-bottom: 1.2rem;
+   }
+   .search-box{
+     box-shadow: 0px 0px 3px rgba(160, 213, 229, 0.5);
+     height: 50px;
+   }
+
+   .phar-item:hover{
+    border:1px solid #36a3f7;
+
+   }
+   .phar-item:active{
+    border:1px solid #36a3f7;
+   }
+  
+   .phar-item:focus{
+     border:1px solid #36a3f7;
+    /* box-shadow: 1px 1px 1px #36a3f7; */
+   }
+   .phar-item:visited {
+    border:1px solid #36a3f7;
+   }
+  .submitted{
+  vertical-align:middle; 
+  text-align: center; 
+  padding-top:50%;
+  }
+
+  .btn_span{
+    background: #36a3f7;
+    border: 5px solid #fff;
+  }
+  .content-right{
+    position: relative;
+  }
+
+  #over-filter{
+    position:absolute;
+    top:20px;
+   
+    /* right: 10%; */
+    z-index:2
+
+  }
+  .return-text{
+    color: #007bff;
+    font-size:1.2rem;
+    font-weight: 600;
+    z-index:2;
+  }
+  .map-fillter-content-select .col-8{
+    padding-left:10px;
+
+  }
+  .map-content{
+    margin-top: 85px;
+  }
+
+  @media (max-width: 1600px) {
+    .slide-bar-left{
+      z-index: 10;
+    }
+      /* #over-filter{
+        left: calc(95vh - 150px);
+        
+
+      } */
+  }
+  @media (max-width: 768px) {
+      .search{
+        width:100%
+      }
+  }
+  /* @media (min-width: 768px) {
+    .dandi__boxmap__search {
+        margin-top:60px;
+      }
+  } */
+  @media (max-width: 1600px) {
+    dandi__boxmap__search
+      {
+          padding-top:0;
+      
+      }
+    }
+  .modal-body{
+    padding-top:10px;
+  }
+  .filter-option{
+    background: #fff;
+    opacity:1;
+    border: 1px solid #a4a4a5;
+    color: #a4a4a5;
+
+  }
+  .active-border{
+    border: 2px solid #36a3f7;
+  }
+  .filter-option:active {
+    border: 2px solid #36a3f7;
+    color: #36a3f7;
+  }
+  li.filter-option:visited {
+
+    border: 2px solid #36a3f7;
+    color: #36a3f7;
+  }
+  li.filter-option:focus {
+
+    border: 2px solid #36a3f7;
+    color: #36a3f7;
+  }
+    .btn-new{
+      float: right;
+    }
+    .searchform {
+      padding-right: 10px;
+      padding-left: 5px;
+
+    }
+    .searchform .row .col-11{
+      padding-left:0;
+      padding-right:0;
+
+    }
+    .searchform .row .col-1{
+      padding-left:0;
+      padding-right:0;
+      
+    }
+    .search{
+      position: fixed; 
+      top:61px;
+      z-index: 11; 
+      background: #fff;
+      width: 390px;
+      padding-right:28px;
+      padding-left: 10px;
+    }
+    .direction-search{
+      width: 420px;
+      position: fixed; 
+      z-index: 11; 
+      background: #fff;
+      padding-right:28px;
+ 
+    }
+    @media (max-width: 640px) {
+      .direction-search{
+        width: 100%;
+        padding-right:48px;
+ 
+    }
+    .search{
+        width: 100%;
+ 
+    }
+  }
+    .form-group select{
+      font-weight: 500;
+      font-size: 1.1rem;
+      font-family:"Montserrat", sans-serif
+    }
+    .submit-btn{
+       margin-top:330px;
+    }
+    .continue-answer-no{
+      margin-top:180px;
+    }
+    .intial-form{
+      padding-top: 0px; 
+      padding-bottom: 0px;
+    } 
+    .phar-item .row .col-1{
+      padding-left: 5px;
+      padding-right: 0;
+    }
+    .phar-item .row .col-11{
+      padding-left:10px;
+      padding-right: 0;
+    }
+    .benefit{
+      margin-top:0;
+     padding: 0 10px 0 30px;
+    }
+    .cap-question{
+      font-size:1.1rem;
+       font-weight: 600
+    }
+    .return-script{
+      vertical-align:  middle; border-radius: 0;     margin-top: 3px;
+    } 
+  /* .images{
+    display: inline-block; 
+    vertical-align: middle;
+  }
+  .filter-text{
+    display: inline-block; 
+  } */
+  .active-border .filter-item span{
+      
+        color:#36a3f7;
+    }
+
+  </style>

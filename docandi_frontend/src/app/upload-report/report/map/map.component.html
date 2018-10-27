@@ -1,0 +1,61 @@
+
+  <div class="content-maps">
+    <div class="form-top">
+      <div class="form-inline">
+        <div class="form-group">
+          <label>From</label>
+          <ng-datepicker [(ngModel)]="fromDate" (ngModelChange)="changeDate()"></ng-datepicker>
+        </div>
+        <div class="form-group">
+          <label>Date Range</label>
+     
+          <select class="form-control" [(ngModel)]="range_date" (change)="changeDate()" name="daterange">
+            <option [value]="1">1 Month</option>
+            <option [value]="2">2 Months</option>
+            <option [value]="3">3 Months</option>
+            <option [value]="4">4 Months</option>
+            <option [value]="5">5 Months</option>
+            <option [value]="6">6 Months</option>
+            <option [value]="7">7 Months</option>
+            <option [value]="8">8 Months</option>
+            <option [value]="9">9 Months</option>
+            <option [value]="10">10 Months</option>
+            <option [value]="11">11 Months</option>
+            <option [value]="12">12 Months</option>
+          </select>
+       
+        </div>
+        <button (click)="hideFilter=!hideFilter" class="btn btn-info btn-filter">
+          <i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
+      </div>
+    </div>
+    <div>
+      <div class="content-select" [hidden]="hideFilter">
+        <div class="row">
+          <div class="col-md-4">
+            <div *ngFor="let option of fillterOption">
+              <label class="text-select">{{option.name}}
+                <input type="radio" checked="checked" [(ngModel)]="optionFilter" [value]="option.value" name="option" (change)="handlePharmacies()">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-8 scroll-content-maps">
+            <div *ngFor="let item of listPharmacy" class="col-md-6">
+              <label class="text-checkbox">{{item.pharmacy_name}}, {{item.address}}, {{item.city}}, {{item.state}}
+                <input type="checkbox" [(ngModel)]="item.checked">
+                <span class="checkmark-check"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="button-footer">
+          <a class="link-page" role="button" (click)="clearFilters()">Clear Filters</a>
+          <button class="btn btn-info" (click)="filter()">Apply</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div id="map"></div>
+

@@ -1,0 +1,15 @@
+<div class="upload-page">
+  <app-upload (dataUpload)="getContentFile($event)" *ngIf="step==1"></app-upload>
+  <app-map-data (next)="gotoStep($event)" *ngIf="step==2" [data]="contentFields"></app-map-data>
+  <app-file-review [hidden]="step!=3" (back)="gotoStep($event)" [data]="contentFields" (next)="gotoStep($event)" (submited)="onGetHistory($event)"></app-file-review>
+  <app-history [hidden]="step!=4" [data]="history" (back)="gotoStep($event)"></app-history>
+  <div class="row three40-b-page" *ngIf="step!=4">
+    <div class="col-offset-4 col-4">
+      <ul class="status icon-slider">
+        <li [class]="step==1?'done':''"></li>
+        <li [class]="step==2?'done':''"></li>
+        <li [class]="step==3?'done':''"></li>
+      </ul>
+    </div>
+  </div>
+</div>

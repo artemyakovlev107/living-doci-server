@@ -1,0 +1,132 @@
+
+
+/* * {
+   font-weight: 500;
+   font-family: "Montserrat", sans-serif;
+} */
+
+.m-content {
+   background-color:#fff;
+
+}
+.m-subheader{
+ padding-bottom: 20px;
+ padding-top: 0px;
+}
+
+.logo{
+    width:165px;
+    height: 110px;
+}
+
+#pwd_input{
+   position:relative;
+   width: 100%;
+   margin-left: 0;
+}
+
+.m-nav__link .m-nav__link-text {
+ display: table-cell;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  font-size: 1rem;
+  color: #36A3F7;
+  font-weight: 400;
+}
+#pwd_right{
+   position: absolute;
+   right: -100%;
+   top: 0;
+   width: 100%;
+   padding-left: 30px;
+   padding-top: 10px;
+}
+.btn{
+
+   background: #36A3F7;
+   color: #FFFFFF;
+}
+.m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__head .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__body .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__foot .m-datatable__row>.m-datatable__cell {
+  vertical-align: middle;
+  padding: 11px 10px;
+  font-size: 1.1rem;
+  font-weight: 500
+}
+.m-content {
+  padding: 0;
+}           
+.subheader-container {
+  display: table-cell;
+  width: 100%;
+  padding-left: 1rem;
+  font-size: 1rem;
+  vertical-align: middle;
+  line-height: 0;
+  padding-left: 0;
+  padding-top: 30px;
+} 
+.clinic_title{
+font-size: 1.5rem;
+font-weight: 600;
+}
+.m-subheader .m-subheader__breadcrumbs.m-nav>.m-nav__item>.m-nav__link>.m-nav__link-text {
+  color: #36A3F7;
+  font-weight: 600;
+  font-size: 0.8;
+}
+.table-admin-metrics{
+  margin-bottom:0; 
+  display: block; 
+  min-height: 300px; 
+  overflow-x: auto;
+}
+.user-datatable{
+  z-index: 10; 
+  padding-bottom: 80px;
+}
+.action_buttons .capture-btn{
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25px;
+  width: 100px;
+  text-align: center;
+}
+.capture-btn {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 25px;
+    width: 160px;
+    text-align: center;
+}
+.m-portletbody-usertable{
+   padding-bottom:0;
+}
+
+.m-subheader a{
+  font-weight: 600; 
+  padding-left: 30px;
+}
+.m-subheader a span{
+  font-weight: 600; 
+
+}
+@media screen and (max-width: 767px) {
+   .m-content {
+   background-color:#fff;
+   }
+   .logo{
+    min-width:240px;
+    height: auto;
+   }
+}
+
+@media screen and (max-width: 1200px) {
+.m-portlet .m-portlet__head .m-portlet__head-tools .btn {
+  margin-top: 35px;
+}
+}

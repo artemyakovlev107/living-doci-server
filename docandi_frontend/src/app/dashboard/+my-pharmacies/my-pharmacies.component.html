@@ -1,0 +1,232 @@
+
+<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body" >	
+    <div class="manage-clinic-pharmacies-page animate">
+        <div class="header">
+            <h4 class="header-title">My Master Pharmacy List</h4>
+        </div>
+        <br/>
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                    <h4 class="header-title">
+                        Clinic Locations
+                    </h4>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <div class="col-xl-4 order-xl-2 m--align-right">
+                        <a class="btn btn-info btn-sm m-btn capture-btn active" (click)="modalAddPhar('Add','')" style="    color: #FFFFFF;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 25px;
+                        width: 180px;
+                        text-align: center;">Add new pharmacy</a>				
+                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="m-portlet__body">
+                <!--begin: Datatable -->
+                <div class=" m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="local_data">
+                    <table class="m-datatable__table table table-striped tablesorter-blue table-admin-metrics">
+                        <thead class="m-datatable__head">
+                            <tr class="m-datatable__row" style="table-layout: fixed">
+                                <th  class="m-datatable__cell text-center" style="width:15%">Name</th>
+                                <th  class="m-datatable__cell text-center" style="width:20%">Address</th>
+                                <th  class="m-datatable__cell  text-center" style="width:15%">City</th>
+                                <th  class="m-datatable__cell  text-center" style="width:10%">State</th>
+                                <th  class="m-datatable__cell  text-center" style="width:10%">Zip</th>
+                                <th  class="m-datatable__cell  text-center" style="width:15%">Phone</th>
+                                <th  class="m-datatable__cell  text-center" style="width:15%"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="m-datatable__body" >
+                            <tr data-row="0" class="m-datatable__row" *ngFor="let p of allPharmacies;let i = index" (mouseenter)="p.showRow = true" (mouseleave)="p.showRow = false" style="table-layout: fixed">
+                                <td data-field="OrderID" class="m-datatable__cell text-center" style="width:15%">{{p.name}}</td>
+                                <td data-field="ShipName" class="m-datatable__cell text-center" style="width:20%">{{p.address}}</td>
+                                <td data-field="Currency" class="m-datatable__cell text-center" style="width:15%">{{p.city}}</td>
+                                <td data-field="ShipAddress" class="m-datatable__cell text-center" style="width:10%">{{p.state}}</td>
+                                <td data-field="ShipDate" class="m-datatable__cell text-center" style="width:10%">{{p.zip}}</td>
+                                <td data-field="Latitude" class="m-datatable__cell text-center" style="width:15%">{{p.phone}}</td>
+                                <td data-field="Actions" class="m-datatable__cell text-center" style="width:15%">
+                                <span>
+                                    <div class="dropdown ">							
+                                    <a href="#" class="btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            
+                                    </a>						  	
+                                    <div class="dropdown-menu dropdown-menu-right">						    	
+                                        <a class="dropdown-item"  (click)="confirmDelete(p,i)"> Remove</a>						    	
+                                        <a class="dropdown-item" (click)="getBenefit(p)"> Benfit</a>						    						  	
+                                    </div>						
+                                    </div>						
+                                    <a (click)="modalAddPhar('Update',p)" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" title="View ">                            <i class="la la-edit"></i>                        
+                                    </a>					
+                                </span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Modal add -->
+        <div class="modal fade" id="AddEditModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{typeModal}} pharmacy</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="m-form m-form--fit m-form--label-align-right" #f="ngForm">
+                            <div class="form-group m-form__group row">
+                                <label for="address"  class="col-3 col-form-label">Address</label>
+                                <div class="col-9">
+                                    <input type="text" [(ngModel)]="pharmacy.address" name="address" required class="form-control m-input" id="address" placeholder="address" #adr="ngModel">
+                                    <small *ngIf="!adr.valid && pharmacy.address != null"  class="text-danger">Address is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="phone"  class="col-3 col-form-label">Phone</label>
+                                <div class="col-9">
+                                    <input type="text" required [(ngModel)]="pharmacy.phone" class="form-control m-input" name="phone" id="phone" placeholder="Phone Number" #phone="ngModel">
+                                    <small *ngIf="!phone.valid && pharmacy.phone != null"  class="text-danger">Phone number is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="Name" class="col-3 col-form-label">Name</label>
+                                <div class="col-9">
+                                    <input type="text" required [(ngModel)]="pharmacy.name" name="name" class="form-control m-input" id="Name" placeholder="Name" #name="ngModel">
+                                    <small *ngIf="!name.valid && pharmacy.name != null"  class="text-danger">Clinic name is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="Email" class="col-3 col-form-label">Email</label>
+                                <div class="col-9">
+                                    <input type="text"  [(ngModel)]="pharmacy.email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" name="email" class="form-control m-input" id="Email" placeholder="Email" #email="ngModel">
+                                    <small *ngIf="!email.valid && pharmacy.email!=null" class="text-danger"> Email is required and format should be <i>john@doe.com</i>.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="city" class="col-3 col-form-label">City</label>
+                                <div class="col-9">
+                                    <input type="text" [(ngModel)]="pharmacy.city" name="city" required class="form-control m-input" id="city" placeholder="City" #city="ngModel">
+                                    <small *ngIf="!city.valid && pharmacy.city != null"  class="text-danger">Clinic city is required.
+                                    </small>
+                                </div>
+    
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="state" class="col-3 col-form-label">State</label>
+                                <div class="col-9">
+                                    <input type="text"  [(ngModel)]="pharmacy.state" required name="state" class="form-control m-input" id="state" placeholder="State" #state="ngModel">
+                                    <small *ngIf="!state.valid && pharmacy.state != null"  class="text-danger">Clinic city is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="zip" class="col-3 col-form-label">Zip Code</label>
+                                <div class="col-9">
+                                    <input type="text" [(ngModel)]="pharmacy.zip" required name="zip" class="form-control m-input" id="zip" placeholder="Zip" #zip="ngModel">
+                                    <small *ngIf="!zip.valid && pharmacy.zip != null"  class="text-danger">Zipcode is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div for="file" class="col-sm-4">
+                                    <a class="btn btn-info" (click)="chooseImage()">Choose Image</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="file" [hidden]="true"  (change)="changeImage($event)" name="file" id="file">
+    
+                                    <!-- <img  id="image"> -->
+                                    <img  id="image" src="{{pharmacy.logo}}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button *ngIf="typeModal=='Add'" (click)="getLatLngForAdd(pharmacy.address+','+pharmacy.city+','+pharmacy.state)" [disabled]="!f.valid || Image==null" class="btn btn-info">Add</button>
+                        <button *ngIf="typeModal=='Update'" (click)="getLatLngForUpdate(pharmacy.address+','+pharmacy.city+','+pharmacy.state)" [disabled]="!f.valid" class="btn btn-info">Update</button>
+                        <button class="btn btn-info" (click)="hideModalPhar()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal confirm delete Pharmacy-->
+    <div class="modal fade" id="confirmDelete" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm delete pharmacy</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure delete {{pharmacy.name}} - {{pharmacy.address}}?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" (click)="deletePharmacy()">Delete</button>
+                    <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal benifit of pharmacy-->
+    <div class="modal fade" id="listBenifit" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">List Benifit of {{pharmacy.name}} - {{pharmacy.address}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="map-tab">
+                        <ul class="map-list-tab">
+                            <li *ngFor="let item of listBenefit" class="itemBenefit">
+                                <div class="col-4">
+                                    <a href="javascript:void(0)" (click)="chooseBenefit(item)">
+                                        <span class="images"><img [src]="item.active==1?item.image_active_url:item.image_url"></span>
+                                        <span>{{item.name}}</span>
+                                    </a>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info"(click)=updateBenefit(); >Update</button>
+                    <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.header-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__head .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__body .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__foot .m-datatable__row>.m-datatable__cell {
+  font-weight: 500
+}
+.manage-clinic-pharmacies-page{
+    width: 100%;
+}
+table{
+    display: block; min-height: 300px; overflow-x: auto;
+}
+td span{
+    overflow: visible; position: relative;
+}
+@media screen and (max-width: 1200px) {
+  .m-portlet .m-portlet__head .m-portlet__head-tools .btn {
+    margin-top: 35px;
+}
+}
+</style>

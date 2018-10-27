@@ -1,0 +1,224 @@
+<!--<div class="admin-hospital">-->
+    <div class="admin-metrics">
+        <div class="wrapper-dashboard_v1">
+            <div class="wrapper-dashboard_v1--inner">
+                <div class="row">
+                   <app-menu-admin [page]="'hospital'"></app-menu-admin>
+                    <div class="dashboard_col_right">
+                        <H2>MANAGE CLIENT</H2>
+                        <a (click)="modalAdd()" class="btn">Add Client</a>
+                        <div class="dashboard_col_right--content">
+                            <div class=" content-tab current" id="content-tab-1">
+                                <div class="admin-metrics-bottom table-responsive">
+                                    <table id="table-ma" class="table table-striped"  [mfData]="listClient"  #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+                                        <thead class="table-bordered">
+                                            <tr>
+                                                <th class="text-center">
+                                                    <mfDefaultSorter by="full_name">Full Name</mfDefaultSorter>
+                                                </th>
+                                                <!--<th class="text-center">-->
+                                                    <!--<mfDefaultSorter by="full_name">Last Name</mfDefaultSorter>-->
+                                                <!--</th>-->
+                                                <th class="text-center">
+                                                    <mfDefaultSorter by="name">Client Name</mfDefaultSorter>
+                                                </th>
+                                                <th class="text-center">
+                                                    <mfDefaultSorter by="email">Email Address</mfDefaultSorter>
+                                                </th><th class="text-center">
+                                                    Logo
+                                                </th>
+                                                <th class="text-center">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-bordered">
+
+                                            <tr *ngFor="let item of mf.data">
+                                                <!--<td class="text-center">{{item.full_name}}</td>-->
+                                                <td class="text-center">{{item.full_name}}</td>
+                                                <td class="text-center">{{item.name}}</td>
+                                                <td class="text-center">{{item.email}}</td>
+                                                <td class="text-center"> <img class="table-logo" src="{{item.image_url}}"></td>
+                                                <td class="text-center"><a class="btn btn-left" (click)="editModal(item)">Edit</a><a class="btn btn-left btn-delete" (click)="confirmDeleteModal(item)">Delete</a><a class="btn btn-signin" (click)="gotoDetail(item.id)">Sign In</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="12">
+                                                <mfBootstrapPaginator (click)="selectPage()" [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="ModalEdit" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Client</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="client_name">Client Name:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="client_name" name="client_name" [(ngModel)]="editItem.name" placeholder="Enter Client name">
+                            </div>
+                        </div>
+                        <div class="form-group add-input">
+                            <div for="file" class="col-sm-4">
+                                <a class="btn" (click)="chooseImageEdit()">Choose Image</a>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="file" [hidden]="true"   (change)="changeImageEdit($event)" name="file" id="fileEdit">
+
+                                <!-- <img  id="image"> -->
+                                <img  id="imageEdit" src="{{editItem.image_url}}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="updateClient()">Update</button>
+                    <button type="button" class="btn btn-default" (click)="closeModalAdd()" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="DeleteConfirmModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Delete Client</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are use sure delete {{deleteClientName}}?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="deleteHospital()">Delete</button>
+                    <button type="button" class="btn btn-default"  data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ModalAdd" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New Client</h4>
+                </div>
+                <div class="modal-body">
+                    <form #f="ngForm" role="form" class="form-horizontal">
+                        <div class="form-content col-lg-10 col-lg-offset-1">
+                            <div class="form-group">
+                                <label for="fullname" class="col-sm-3 control-label admin-label">Full name</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.full_name" #nameView="ngModel" required class="form-control" id="fullname" name="fullname" placeholder="Full Name" >
+                                <small *ngIf="!nameView.valid && userInfo.full_name != null"  class="text-danger">Full Name is required.
+                                </small>
+                                    </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="col-sm-3 control-label admin-label">Address</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.address" #addressView="ngModel" required class="form-control" id="address" name="address" placeholder="Address">
+                                <small *ngIf="!addressView.valid && userInfo.address!=null" class="text-danger">Address is required.
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city" class="col-sm-3 control-label admin-label">City</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.city"  #cityView="ngModel"  required minlength="0" maxlength="30" id="city" class="form-control" name="city" placeholder="City">
+
+                                <small *ngIf="!cityView.valid && userInfo.city!=null" class="text-danger">City address is required.
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="state" class="col-sm-3 control-label admin-label">State</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.state"  #stateView="ngModel"  required maxlength="30" class="form-control" id="state" name="state" placeholder="State">
+                                <small *ngIf="!stateView.valid && userInfo.state !=null" class="text-danger">State address is required .
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="zipcode" class="col-sm-3 control-label admin-label">Zip code</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.zip"  #zipcodeView="ngModel"  required  maxlength="30" class="form-control" id="zipcode" name="zipcode" placeholder="Zip code">
+
+                                <small *ngIf="!zipcodeView.valid && userInfo.zip!=null" class="text-danger">Zipcode is required.
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-sm-3 control-label admin-label">Phone</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.phone" #phoneView="ngModel"  required minlength="6" maxlength="30" class="form-control" id="phone" name="phone" placeholder="Phone Number">
+
+                                <small *ngIf="!phoneView.valid && userInfo.phone!=null" class="text-danger">Phone number is required.
+                                </small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailadress" class="col-sm-3 control-label admin-label">Email address</label>
+                                <div class="col-sm-9">
+                                <input  [(ngModel)]="userInfo.email" #emailView="ngModel" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" class="form-control" id="emailadress" name="emailadress" placeholder="Email Address">
+                                <small *ngIf="!emailView.valid && userInfo.email!=null" class="text-danger"> Email is required and format should be <i>john@doe.com</i>.
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city" class="col-sm-3 control-label admin-label">Password</label>
+                                <div class="col-sm-9">
+                                <input [(ngModel)]="userInfo.password" type="password"  #passView="ngModel"  required minlength="6" maxlength="30" id="password" class="form-control"  name="password" placeholder="Password">
+                                <small *ngIf="!passView.valid && userInfo.password!=null" class="text-danger"> Password is required (minimum 6 characters).
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordConfirm" class="col-sm-3 control-label admin-label">Confirm password</label>
+                                <div class="col-sm-9">
+                                <input [(ngModel)]="userInfo.passwordConfirm" type="password" #passConfirmView="ngModel"  required minlength="6" maxlength="30" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password">
+                                <small *ngIf="(!passConfirmView.valid && userInfo.passwordConfirm!=null) || (userInfo.passwordConfirm!=userInfo.password && userInfo.passwordConfirm!=null)" class="text-danger"> Password confirm is required and match password (minimum 6 characters).
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="hospitalname" class="col-sm-3 control-label admin-label">Hospital name</label>
+                                <div class="col-sm-9">
+                                <input [(ngModel)]="userInfo.hospital_name" #hospitalNameview="ngModel"   required  class="form-control" id="hospitalname" name="hospitalname" placeholder="Hospital Name">
+                                <small *ngIf="!hospitalNameview.valid && userInfo.hospital_name!=null" class="text-danger">Hospital Name is required.
+                                </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                    <input type="file" [hidden]="true"  (change)="changeImage($event)" name="file" id="file">
+                                    <img  (click)="chooseImage()" id="image" src="assets/images/yourlogohere.png">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-danger">{{errorMessage}}</h3>
+                        <button type="button" (click)="closeModalAdd()" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <Button (click)="addNewClient()" class="btn btn-default pull-right" [disabled]="!f.valid || userInfo.passwordConfirm!=userInfo.password || !Image">Sign Up</Button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--</div>-->

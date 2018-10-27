@@ -1,0 +1,18 @@
+<!-- tooltip-top/tooltip-left -->
+<div class="" [class]="position" *ngIf="showTour">
+  <div class="tooltip-aleart-content">
+      <h3 class="title">{{title}}</h3>
+      <div class="tooltip-aleart-content-box">
+          <p [innerHTML]="content" style="font-weight:100;color:black"></p>
+      </div>
+      <div class="tooltip-aleart-content-footer">
+          <div class="tooltip-aleart-content-footer-btn box-left">
+              <button class="btn"  (click)="prev()" [disabled]="activePage==0 && bound"><i class="fa fa-angle-double-left" aria-hidden="true"  ></i>Prev</button>
+              <button class="btn btn-danger"(click)="next()" [disabled]="(activePage==maxSize && bound) || disableEndtour">Next<i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+          </div>
+          <div class="tooltip-aleart-content-footer-btn box-right">
+              <button class="btn btn-white2" (click)="endTour()">End Tour</button>
+          </div>
+      </div>
+  </div>
+</div>

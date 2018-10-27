@@ -1,0 +1,169 @@
+<div class="dashboard_col_right">
+    <H2>MANAGE CLINICS</H2>
+    <div class="row">
+        <div class="col-md-6"><a class="btn" (click)="showModalAddEdit('Add','')">Add Clinic</a></div>
+        <div class="col-md-6"></div>
+    </div>
+    <div class="dashboard_col_right--content">
+        <div class=" content-tab current" id="content-tab-1">
+            <div class="admin-metrics-bottom table-responsive">
+                <table id="table-ma" class="table table-striped tablesorter-blue table-admin-metrics"
+                [mfRowsOnPage]="rowsOnPage" [mfData]="listClinicLocation" #mf="mfDataTable">
+             <thead class="table-bordered">
+             <tr>
+                 <th class="text-center">
+                     <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                 </th>
+                 <th class="text-center">
+                     <mfDefaultSorter by="address">Address</mfDefaultSorter>
+                 </th>
+                 <th class="text-center">
+                     <mfDefaultSorter by="city">City</mfDefaultSorter>
+                 </th>
+                 <th class="text-center">
+                     Phone
+                 </th>
+                 <th class="text-center">
+                     State
+                 </th>
+                 <th class="text-center">
+                     Zip
+                 </th>
+                 <th class="text-center">
+                     Image
+                 </th>
+                 <th class="text-center">
+                     Action
+                 </th>
+             </tr>
+             </thead>
+             <tbody class="table-bordered">
+             <tr *ngFor="let item of mf.data">
+                 <td class="text-center">{{item.name}}</td>
+                 <td class="text-center">{{item.address}}</td>
+                 <td class="text-center">{{item.city}}</td>
+                 <td class="text-center">{{item.phone}}</td>
+                 <td class="text-center">{{item.state}}</td>
+                 <td class="text-center">{{item.zip}}</td>
+                 <td class="text-center"><img class="table-logo" src="{{item.image_url}}"></td>
+                 <td class="text-center"><a class="btn btn-left" (click)="showModalAddEdit('Update',item)">Edit</a><a class="btn btn-delete" (click)="confirmDeleteLocation(item)">Delete</a></td>
+             </tr>
+             </tbody>
+             <tfoot>
+             <tr>
+                 <td colspan="12">
+                     <mfBootstrapPaginator (click)="selectPage()"
+                                           [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                 </td>
+             </tr>
+             </tfoot>
+         </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddEditModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{typeModal}} clinic location</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" #f="ngForm">
+                    <div class="form-group add-input">
+                        <label for="address"  class="col-sm-2 control-label">Address</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="clinicLocation.address" name="address" required class="form-control" id="address" placeholder="Address" #adr="ngModel">
+                            <small *ngIf="!adr.valid && clinicLocation.address != null"  class="admin-hospital-message text-danger">Address is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="phone"  class="col-sm-2 control-label">Phone</label>
+                        <div class="col-sm-10">
+                            <input type="text" required [(ngModel)]="clinicLocation.phone" class="form-control" name="phone" id="phone" placeholder="Phone Number" #phone="ngModel">
+                            <small *ngIf="!phone.valid && clinicLocation.phone != null"  class="admin-hospital-message text-danger">Phone number is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="Name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" required [(ngModel)]="clinicLocation.name" name="name" class="form-control" id="Name" placeholder="Name" #name="ngModel">
+                            <small *ngIf="!name.valid && clinicLocation.name != null"  class="admin-hospital-message text-danger">Clinic name is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="Email" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="clinicLocation.email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" name="email" class="form-control" id="Email" placeholder="Email" #email="ngModel">
+                            <small *ngIf="!email.valid && clinicLocation.email!=null" class="admin-hospital-message text-danger"> Email is required and format should be <i>john@doe.com</i>.
+                            </small>
+                            </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="city" class="col-sm-2 control-label">City</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="clinicLocation.city" name="city" required class="form-control" id="city" placeholder="City" #city="ngModel">
+                            <small *ngIf="!city.valid && clinicLocation.city != null"  class="admin-hospital-message text-danger">Clinic city is required.
+                            </small>
+                        </div>
+
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="state" class="col-sm-2 control-label">State</label>
+                        <div class="col-sm-10">
+                            <input type="text"  [(ngModel)]="clinicLocation.state" required name="state" class="form-control" id="state" placeholder="State" #state="ngModel">
+                            <small *ngIf="!state.valid && clinicLocation.state != null"  class="admin-hospital-message text-danger">State is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="zip" class="col-sm-2 control-label">Zip Code</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="clinicLocation.zip" required name="zip" class="form-control" id="zip" placeholder="Zip" #zip="ngModel">
+                            <small *ngIf="!zip.valid && clinicLocation.zip != null"  class="admin-hospital-message text-danger">Zipcode is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <div for="file" class="col-sm-4">
+                            <a class="btn" (click)="chooseImage()">Choose Image</a>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="file" [hidden]="true"   (change)="changeImage($event)" name="file" id="file">
+
+                            <!-- <img  id="image"> -->
+                            <img  id="image" src="{{clinicLocation.image_url}}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="typeModal=='Add'" (click)="getLatLngForAdd(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)" [disabled]="!f.valid || Image==null" class="btn">Add</button>
+                <button *ngIf="typeModal=='Update'" (click)="getLatLngForUpdate(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)" [disabled]="!f.valid" class="btn">Update</button>
+                <button class="btn" (click)="hideModalLocation()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDelete" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Delete Clinic Location</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are use sure delete {{clinicLocation.name}}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="deleteLocation()">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

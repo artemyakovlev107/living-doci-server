@@ -1,0 +1,173 @@
+
+<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body" style="padding-top:100px;">	
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-auto">
+                            <h3 class="m-subheader__title ">MA Performance</h3>			
+                        </div>
+                        <div class="admin-metrics-download text-right">
+                            <a (click)="download_csv()" style="color:#36a3f7"> Download CSV</a>
+                            <!-- <img src="assets/images/svc-icon-download.jpg"> -->
+                        </div>
+                        <div class='box-datetime-1'>
+                            <div class="form-group">
+                                <ng-datepicker [ngModel]="dateFrom" (ngModelChange)="handleDateFromChange($event)"></ng-datepicker>
+                                <!-- <datetime [ngModel]="dateFrom" (ngModelChange)="handleDateFromChange($event)" [timepicker]="false"></datetime> -->
+                            </div>
+                        </div>
+                        <div class="box-hrr"> - </div>
+                        <div class='box-datetime-1'>
+                            <div class="form-group">
+                                <ng-datepicker [ngModel]="dateTo" (ngModelChange)="handleDateToChange($event)"></ng-datepicker>
+                                <!-- <datetime  (ngModelChange)="handleDateToChange($event)" [(ngModel)]="dateTo" [timepicker]="false"></datetime> -->
+                            </div>
+                        </div>
+                        <div class="box-hrr"> &nbsp; </div>
+                        <div class="box-select-1">
+                            <div class="form-group">
+                                <select (change)="changeLocation()" [(ngModel)]="request.location_id" class="form-control" id="sel1" >
+                                    <option value="0">All Locations</option>
+                                    <option value="{{item.id}}" *ngFor="let item of listClinic">
+                                        {{item.address}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    <div>
+                </div>
+            </div>
+        </div>
+ 
+        <div class="m-content">
+            <div class="m-portlet">
+                <div class="m-portlet__body  m-portlet__body--no-padding">
+                    <div class="row m-row--no-padding m-row--col-separator-xl">
+                        <div class="col-xl-3">
+                            <div class="m-widget1">
+                                <div class="m-widget1__item">  
+                                    <div class="admin-metrics-tab-ma-chart-box">
+                                        <div class="admin-metrics-tab-ma-chart-box-left">
+                                            <img class="image-1" src="assets/images/admin-user.png">
+                                        </div>
+                                        <div class="admin-metrics-tab-ma-chart-box-content">
+                                            <h2 class="admin-metrics-tab-ma-chart-box-title">{{listUserResponse.length}}</h2>
+                                            <p class="admin-metrics-tab-ma-chart-box-text">User</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="m-widget1">
+                                <div class="m-widget1__item">
+                                    <div class="admin-metrics-tab-ma-chart-box admin-metrics-tab-ma-chart-box-2" id="chart-admin-metronic-box">
+                                        <div class="admin-metrics-tab-ma-chart-box-left" id="chart-admin-metronic">
+                                                <div id="chartContracted"></div>
+                                        </div>
+                                        <div class="admin-metrics-tab-ma-chart-box-content" id="chart-admin-metronic-text">
+                                            <h2 class="admin-metrics-tab-ma-chart-box-title">{{UsingContractedTotal}}</h2>
+                                            <p class="admin-metrics-tab-ma-chart-box-text">Contracted</p>
+                                            <p *ngIf="PatientsCaptureTotal !=0" class="admin-metrics-tab-ma-chart-box-text">{{contractedPercent}}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="m-widget1">
+                                <div class="m-widget1__item">
+                                    <div class="admin-metrics-tab-ma-chart-box admin-metrics-tab-ma-chart-box-2" id="chart-admin-metronic-box">
+                                        <div class="admin-metrics-tab-ma-chart-box-left" id="chart-admin-metronic">
+                                            <div id="chartNotContracted"></div>                  
+                                        </div>
+                                        <div class="admin-metrics-tab-ma-chart-box-content" id="chart-admin-metronic-text">
+                                            <h2 class="admin-metrics-tab-ma-chart-box-title">{{NotContractedTotal}}</h2>
+                                            <p class="admin-metrics-tab-ma-chart-box-text">Not Contracted</p>
+                                            <p *ngIf="PatientsCaptureTotal !=0" class="admin-metrics-tab-ma-chart-box-text">{{notContractedPercent}}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3">
+                            <div class="m-widget1">
+                                <div class="m-widget1__item">
+                                    <div class="admin-metrics-tab-ma-chart-box admin-metrics-tab-ma-chart-box-2" id="chart-admin-metronic-box">
+                                        <div class="admin-metrics-tab-ma-chart-box-left" id="chart-admin-metronic">
+                                            <div id="chartSwitched"></div> 
+                                        </div>
+                                        <div class="admin-metrics-tab-ma-chart-box-content" id="chart-admin-metronic-text">
+                                            <h2 class="admin-metrics-tab-ma-chart-box-title">{{AgreeToSwitchTotal}}</h2>
+                                            <p class="admin-metrics-tab-ma-chart-box-text">Switched</p>
+                                            <p *ngIf="PatientsCaptureTotal !=0" class="admin-metrics-tab-ma-chart-box-text">{{agreeToSwitchPercent}}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="m-portlet">
+                     <div class="m-portlet m-portlet--mobile ">
+                       <div class="m-portlet__body">
+                            <!--begin: Datatable -->
+                            <div class=" m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders" style="">
+                                <table id="table-ma" class="m-datatable__table table table-striped tablesorter-blue table-admin-metrics" [mfRowsOnPage]="rowsOnPage" [mfData]="listUserResponse" #mf="mfDataTable">
+                                    <thead class="m-datatable__head">
+                                        <tr class="m-datatable__row" style="table-layout: fixed;">
+                                                
+                                            <!-- <th  class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check">
+                                                    <span style="width: 30px;"></span>
+                                            </th> -->
+                                            <th  class="m-datatable__cell  text-center" style="width:20%"><span><mfDefaultSorter by="full_name">Users</mfDefaultSorter></span></th>
+                                            <th  class="m-datatable__cell  text-center"  style="width:20%"><span><mfDefaultSorter by="PatientsCapture">Patients Captured</mfDefaultSorter></span></th>
+                                            <th  class="m-datatable__cell  text-center" style="width:15%"><span><mfDefaultSorter by="UsingContracted">Using Contracted</mfDefaultSorter></span></th>
+                                            <th  class="m-datatable__cell  text-center" style="width:15%"><span><mfDefaultSorter by="NotContracted">Not Contracted</mfDefaultSorter></span></th>
+                                            <th  class="m-datatable__cell  text-center" style="width:15%"><span><mfDefaultSorter by="AgreeToSwitch">Agree to Switched</mfDefaultSorter></span></th>
+                                            <th  class="m-datatable__cell  text-center" style="width:15%"><span><mfDefaultSorter by="day_active">Days Active</mfDefaultSorter></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="m-datatable__body table-admin-metrics" >
+                                        <tr  *ngFor="let item of mf.data | paginate: { itemsPerPage: 10, currentPage: page}" class="m-datatable__row" style="table-layout: fixed;">
+                                            <td class="m-datatable__cell--center m-datatable__cell" >
+                                                <span style="width: 20px; ">
+                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                    <a class="title" [class.user-status-on]="item.online_status == 1"></a>
+                                                </label>
+                                              </span>
+                                            </td>                                     
+                                            <td  class="m-datatable__cell  text-center" style="width:20%">{{item.full_name}}</td>
+                                            <td  class="m-datatable__cell  text-center" style="width:20%"> {{item.PatientsCapture}}</td>
+                                            <td  class="m-datatable__cell  text-center" style="width:15%">{{item.UsingContracted}}</td>
+                                            <td  class="m-datatable__cell  text-center" style="width:15%">{{item.NotContracted}}</td>
+                                            <td  class="m-datatable__cell  text-center" style="width:15%">{{item.AgreeToSwitch}}</td>
+                                            <td  class="m-datatable__cell  text-center" style="width:15%">{{item.day_active}}</td>               
+                                        </tr>  
+                                    </tbody>
+                                    <!-- <tfoot>
+                                            <tr>
+                                                <td colspan="12" class="pull-right">
+                                                    <mfBootstrapPaginator (click)="selectPage()" [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                                                </td>
+                                            </tr>
+                                    </tfoot> -->
+                                </table>
+                                <div >
+                                    <pagination-controls (pageChange)="page = $event" style="
+                                        color: black;
+                                        font-size: 1rem;
+                                        font-weight: 400;
+                                        line-height: 1.428571428571429;
+                                    "></pagination-controls>
+                                </div>
+                      </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+   

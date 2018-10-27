@@ -1,0 +1,14 @@
+.chart-icon{
+    font-size: 25px;
+    
+}
+.sub-chart {
+    /* overflow: hidden; */
+ 
+    padding-top:10px;
+    padding-bottom: 20px;
+  }
+  .control-label{
+    margin-top: 0.5rem;
+  }
+  

@@ -1,0 +1,15 @@
+.upload-page{
+  /* height:calc(100vh - 50px); */
+  height: 103vh;
+  background: linear-gradient(to bottom, #fff 0, #a3d7e5 100%);
+}
+.three40-b-page {
+  /* width: 570px; */
+  margin-left: 45%;
+}
+.icon-slider {
+  padding:0;
+}
+.three40-b-page ul.status li:before {
+  width: 0 !important;
+}

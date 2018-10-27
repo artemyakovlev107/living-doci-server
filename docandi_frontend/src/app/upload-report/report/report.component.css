@@ -1,0 +1,12 @@
+.admin-metrics {
+  background: #f9f9f9;
+  /* padding-bottom: 40px; */
+}
+.pdr {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.left-side{
+  padding-left: 0;
+  padding-right: 0;
+}

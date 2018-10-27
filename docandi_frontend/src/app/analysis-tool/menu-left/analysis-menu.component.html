@@ -1,0 +1,11 @@
+<ul class="db-list-tab">
+    <li>
+        <a [routerLink]="['/analysis/MA']" (click)="gotoMA()" [class.active]="currentPage=='MA'">MA Performance</a>
+    </li>
+    <li>
+        <a [routerLink]="['/analysis/Three40BMetric']" (click)="gotoMetric()" [class.active]="currentPage=='Three40BMetric'" >340B Metrics</a>
+    </li>
+    <li>
+        <a [routerLink]="['/analysis/Software-Usage']" (click)="gotoSoftwareUsage()" [class.active]="currentPage=='Software-Usage'">Software Usage</a>
+    </li>
+</ul>

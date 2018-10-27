@@ -1,0 +1,498 @@
+
+<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body" style="margin-top:-20px; ">
+  <div  class="m-grid__item m-grid__item--fluid m-wrapper"	>	    			    
+  <!-- BEGIN: Subheader -->
+  <div class="m-subheader ">
+    <div class="row">
+      <div class="col-lg-2 col-12" style="padding-right:0;">
+          <img src="{{currentClinic.image_url}}" class="logo"	style="max-width: 80%; height: auto;">
+          <a *ngIf="showEditClinic" class="m-nav__link" (click)="chooseImageClinic()">
+              <input type="file" [hidden]="true" (change)="changeImageClinic($event)" name="file" id="fileClinic">
+              <span class="m-nav__link-text">Change Logo</span>
+          </a>
+      </div>
+      <div class="col-lg-3 col-12" *ngIf="showEditClinic">
+
+            <!-- <div class="card-header card-primary card-inverse" (click)="chooseImageClinic()">
+              <input type="file" [hidden]="true" (change)="changeImageClinic($event)" name="file" id="fileClinic">
+              <span class="card-title">Change Logo</span>
+            </div> -->
+            <div class="card-block">
+              <input type="text" class="form-control" name="ClinicName" [(ngModel)]="currentClinic.name" placeholder="Image Url" />
+            </div>
+            <div>
+                <button class="btn" (click)="UpdateClinic()">Save Change</button> &nbsp;
+                <button class="btn" (click)="cancelEditClinic()">Cancel</button>
+        </div>
+    </div>
+      <div class="col-lg-7 col-12" style="padding-left: 0;"  *ngIf="!showEditClinic">
+        <div class="subheader-container">
+            <h4  *ngIf="!editClinicItem.id" class="clinic_title">{{currentClinic.name}}</h4>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item" *ngIf="!showEditClinic">
+                  <a (click)="editClinic()" class="m-nav__link">
+                    <span class="m-nav__link-text">Edit Name & Logo</span>
+                  </a>
+                </li>
+                <li class="m-nav__separator">&nbsp;&nbsp;</li>
+                <li class="m-nav__item" *ngIf="!showEditClinic"> 
+                  <a (click)="showModalIntroduction()" class="m-nav__link">
+                    <span class="m-nav__link-text">340B Benefit Introduction</span>
+                  </a>
+                </li>
+                <li class="m-nav__separator">&nbsp;&nbsp;</li>
+                <li class="m-nav__item" *ngIf="!showEditClinic">
+                  <a (click)="showModalInfoSavingCard()" class="m-nav__link">
+                    <span class="m-nav__link-text" >Prescription Savings Card</span>   
+                  </a> 
+                </li>
+                <li class="m-nav__separator">&nbsp;&nbsp;</li>
+                <!-- <li class="m-nav__item" >
+                    <a class="m-nav__link" (click)="showMaping()">
+                      <span class="m-nav__link-text">Mapping Data</span>
+                    </a>
+                  </li> -->
+              </ul>
+         </div>   
+      </div>
+      <div class="col-lg-3 col-12">
+
+          <div class="row" *ngIf="editClinicItem.id">
+              <input type="text" class="form-control" name="clinicName" [(ngModel)]="editClinicItem.name" placeholder="Full Name">
+              <div>
+                  <button class="pull-left btn btn-primary" (click)="cancelEditClinic()">Cancel</button>
+                  <button class="pull-left btn btn-primary btn-bordered" (click)="saveClinic()">Save</button>
+              </div>
+          </div>
+      </div>
+    </div>
+ 
+  </div>                                                    
+  <!-- END: Subheader -->		        
+  <div class="m-content">
+    
+    <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="clinic_title">
+              Clinic Locations
+            </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools">
+          <div class="col-xl-4 order-xl-2 m--align-right">
+            <a (click)="showModalAddEdit('Add','')" class="btn btn-info btn-sm m-btn capture-btn active">
+              <span>
+                <span>Add Location</span>
+              </span>
+            </a>					
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <div class=" m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="local_data">
+          <table class="m-datatable__table table table-striped tablesorter-blue table-admin-metrics" style="display: block; min-height: 300px; overflow-x: auto;">
+              <thead class="m-datatable__head">
+                  <tr class="m-datatable__row" style="table-layout: fixed;">
+                      <th  class="m-datatable__cell text-center" style="width:15%">Name</th>
+                      <th  class="m-datatable__cell text-center" style="width:20%">Address</th>
+                      <th  class="m-datatable__cell  text-center" style="width:15%">City</th>
+                      <th  class="m-datatable__cell  text-center" style="width:10%">State</th>
+                      <th  class="m-datatable__cell  text-center" style="width:10%">Zip</th>
+                      <th  class="m-datatable__cell  text-center" style="width:15%">Phone</th>
+                      <!-- <th  class="m-datatable__cell  text-center" style="width:15%"></th> -->
+                  </tr>
+              </thead>     
+              <tbody class="m-datatable__body" >
+                  <tr data-row="0" class="m-datatable__row"  *ngFor="let location of listClinicLocation;let i = index" (mouseenter)="location.showRow = true;" (mouseleave)="location.showRow = false" style="table-layout: fixed;">
+                      <td data-field="OrderID" class="m-datatable__cell text-center" style="width:15%">{{location.name}}</td>
+                      <td data-field="ShipName" class="m-datatable__cell text-center" style="width:20%">{{location.address}}</td>
+                      <td data-field="Currency" class="m-datatable__cell text-center" style="width:15%">{{location.city}}</td>
+                      <td data-field="ShipAddress" class="m-datatable__cell text-center" style="width:10%">{{location.state}}</td>
+                      <td data-field="ShipDate" class="m-datatable__cell text-center" style="width:10%">{{location.zip}}</td>
+                      <td data-field="Latitude" class="m-datatable__cell text-center" style="width:15%">{{location.phone}}</td>
+                      <!-- <td data-field="Actions" class="m-datatable__cell" style="width:15%">
+                        <span style="overflow: visible; position: relative;">
+                          <div class="dropdown ">							
+                            <a href="" class="btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            
+                            </a>						  	
+                          </div>						
+                          <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" title="View ">                            <i class="la la-edit"></i>                        
+                          </a>					
+                        </span>
+                      </td> -->
+                  </tr>
+              </tbody>
+          </table>
+        </div>
+        <!--end: Datatable -->
+      </div>  
+    </div>
+    </div>
+    <div class="m-content">	
+      <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="clinic_title">
+                Members
+              </h3>
+            </div>
+          </div>
+          <div class="m-portlet__head-tools">
+            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                <a  class="btn btn-info btn-sm m-btn capture-btn active" *ngIf="editMemberItem.id !== 'NEW'" (click)="newMember()">
+                  <span>
+                    <span>Invite Member</span>
+                  </span>
+                </a>						
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body m-portletbody-usertable" >
+          <!--begin: Datatable -->
+          <div class=" m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="local_data">
+            <table class="m-datatable__table table table-striped tablesorter-blue table-admin-metrics" >
+                <thead class="m-datatable__head">
+                    <tr class="m-datatable__row">
+                        <th  class="m-datatable__cell m-datatable__cell--sort" style="width: 20%;"><span >Name</span></th>
+                        <th  class="m-datatable__cell m-datatable__cell--sort" style="width: 35%;"><span >Email</span></th>
+                        <th  class="m-datatable__cell m-datatable__cell--sort" style="width: 35%;"><span >Role</span></th>
+                        <td class="m-datatable__cell m-datatable__cell--sort" style="width: 10%;"><span ></span>
+                    </tr>
+                </thead>
+                <tbody class="m-datatable__body user-datatable">
+                    <tr class="m-datatable__row "  style="left: 0px;" *ngFor="let member of listMember; let i=index" (mouseenter)="member.showRow = true" (mouseleave)="member.showRow = false">
+                        <td class="m-datatable__cell" style="width: 20%;"><span >{{member.full_name}}</span></td>
+                        <td class="m-datatable__cell" style="width: 35%;" ><span >{{member.email}}</span></td>
+                        <td class="m-datatable__cell"  style="width: 35%;" *ngIf="!member.edit"><span>{{member.role>=1?'admin':'member'}}</span></td>
+                        <td class="m-datatable__cell" style="width:35%;"  *ngIf="member.edit"><span >
+                          <select name="role" [(ngModel)]="memberAdd.role">
+                            <option value="0">Member</option>
+                            <option value="1">Admin</option>
+                          </select></span>
+                        </td>
+                        <td class="m-datatable__cell" *ngIf="!(member.showRow && currentUser.role > member.role) && !member.edit" style="width: 10%;">
+                            <span style="overflow: visible; position: relative; ">
+                          </span>
+                        </td>
+                        <td class="m-datatable__cell" *ngIf="(member.showRow && currentUser.role > member.role) || member.edit" style="width: 10%;">
+                            <span style="overflow: visible; position: relative; ">
+                              <div class="dropdown ">							
+                                <a href="#" class="btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            
+                                </a>						  	
+                                <div class="dropdown-menu dropdown-menu-right">						    	
+                                  <a class="dropdown-item" (click)="confirmDeleteMember(member,i)">Delete</a>						    	
+                                  <a class="dropdown-item" (click)="setGoalModal(member)" >Set Goal</a>						    						  	
+                                </div>						
+                              </div>						
+                              <a  *ngIf="!member.edit"  (click)="member.edit = true;" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" title="View ">                            <i class="la la-edit"></i>                        
+                              </a>	
+                              <a   *ngIf="member.edit" (click)="updateRole(member.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" title="View ">                            <i class="la la-check"></i>                      
+                              </a>
+      
+                          </span>
+                        </td>
+                    </tr>
+                    <!--NEW MEMBER-->
+                    <tr class="m-datatable__row " style="left: 0px;" *ngIf="editMemberItem.id === 'NEW'">
+                        <td class="m-datatable__cell">
+                          <input [(ngModel)]="memberAdd.full_name" type="text" name="name" #name="ngModel" class="form-control input-underline" required
+                            placeholder="Full Name" style="width: 233px;">
+                          <small *ngIf="!name.valid" class="text-danger">
+                            Full Name is required.
+                          </small>
+                        </td>
+                        <td class="m-datatable__cell">
+                          <input [(ngModel)]="memberAdd.email" type="text" name="email" class="form-control input-underline" required #email="ngModel"
+                            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" placeholder="Email" style="width: 233px;">
+                          <small *ngIf="!email.valid" class="text-danger">
+                            Email is required and format should be
+                            <i>john@doe.com</i>.
+                          </small>
+                        </td>
+                        <td class="m-datatable__cell">
+
+                          <select name="role" [(ngModel)]="memberAdd.role" style="width: 150px;">
+                            <option value="0">Member</option>
+                            <option value="1">Admin</option>
+                          </select>
+
+                        </td>
+                        <td class="m-datatable__cell action-column pull-right">
+                        </td>
+                      </tr>
+                      <tr *ngIf="showMess">
+                        <span class="text-center bg-danger">{{errorMessage}}</span>
+                      </tr>
+                      <tr *ngIf="showMess">
+                        <span class="text-center bg-success">{{successMessage}}</span>
+                      </tr>
+                      <tr *ngIf="listMember.length == 0" style="padding-left:50px;">No Members</tr>
+                </tbody>
+            </table>
+          </div>
+          <!--end: Datatable -->
+          <div class="row">
+              <div class="col-lg-offset-9 col-lg-3">
+                <div *ngIf="editMemberItem.id === 'NEW'" class="pull-right action_buttons">
+                  <Button class="btn btn-info btn-sm m-btn capture-btn active"  [disabled]="sending" (click)="inviteMember()">
+                    <i class="fa fa-edit"></i>Save
+                  </Button>
+                  &nbsp;&nbsp;
+                  <Button class="btn btn-info btn-sm m-btn capture-btn active"  (click)="cancelEditMember()">
+                    <i class="fa fa-edit"></i>Cancel
+                  </Button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>	 	                       
+</div>
+</div>
+
+<!-- modals -->
+  <!-- Modal add  -->
+  <div class="modal fade" id="AddEditModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{typeModal}} clinic location</h4>
+          </div>
+          <div class="modal-body">
+            <form class="m-form m-form--fit m-form--label-align-right" #f="ngForm">
+              <div class="form-group m-form__group row">
+                <label for="address" class="col-3 col-form-label">Address</label>
+                <div class="col-9">
+                  <input type="text" class="form-control m-input" [(ngModel)]="clinicLocation.address" name="address" required class="form-control" id="address" placeholder="address"
+                    #adr="ngModel">
+                  <small *ngIf="!adr.valid && clinicLocation.address != null" class="text-danger">Address is required.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="phone" class="col-3 col-form-label">Phone</label>
+                <div class="col-9">
+                  <input type="text" required [(ngModel)]="clinicLocation.phone" class="form-control m-input" name="phone" id="phone" placeholder="Phone Number"
+                    #phone="ngModel">
+                  <small *ngIf="!phone.valid && clinicLocation.phone != null" class="text-danger">Phone number is required.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="Name" class="col-3 col-form-label">Name</label>
+                <div class="col-9">
+                  <input type="text" required [(ngModel)]="clinicLocation.name" name="name" class="form-control m-input" id="Name" placeholder="Name"
+                    #name="ngModel">
+                  <small *ngIf="!name.valid && clinicLocation.name != null" class="text-danger">Clinic name is required.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="Email" class="col-3 col-form-label">Email</label>
+                <div class="col-9">
+                  <input type="text" [(ngModel)]="clinicLocation.email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                    name="email" class="form-control m-input" id="Email" placeholder="Email" #email="ngModel">
+                  <small *ngIf="!email.valid && clinicLocation.email!=null" class="text-danger"> Email is required and format should be
+                    <i>john@doe.com</i>.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="city" class="col-3 col-form-label">City</label>
+                <div class="col-9">
+                  <input type="text" [(ngModel)]="clinicLocation.city" name="city" required class="form-control m-input" id="city" placeholder="City"
+                    #city="ngModel">
+                  <small *ngIf="!city.valid && clinicLocation.city != null" class="text-danger">Clinic city is required.
+                  </small>
+                </div>
+    
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="state" class="col-3 col-form-label">State</label>
+                <div class="col-9">
+                  <input type="text" [(ngModel)]="clinicLocation.state" required name="state" class="form-control m-input" id="state" placeholder="State"
+                    #state="ngModel">
+                  <small *ngIf="!state.valid && clinicLocation.state != null" class="text-danger">Clinic city is required.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="zip" class="col-3 col-form-label">Zip Code</label>
+                <div class="col-9">
+                  <input type="text" [(ngModel)]="clinicLocation.zip" required name="zip" class="form-control m-input" id="zip" placeholder="Zip" #zip="ngModel">
+                  <small *ngIf="!zip.valid && clinicLocation.zip != null" class="text-danger">Zipcode is required.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <div for="file" class="col-3">
+                  <a class="btn" (click)="chooseImage()">Choose Image</a>
+                </div>
+                <div class="col-9">
+                  <input type="file" [hidden]="true" (change)="changeImage($event)" name="file" id="file">
+    
+                  <!-- <img  id="image"> -->
+                  <img id="image" src="{{clinicLocation.image_url}}">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button *ngIf="typeModal=='Add'" (click)="getLatLngForAdd(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)"
+              [disabled]="!f.valid || Image==null" class="btn">Add</button>
+            <button *ngIf="typeModal=='Update'" (click)="getLatLngForUpdate(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)"
+              [disabled]="!f.valid" class="btn">Update</button>
+            <button class="btn" (click)="hideModalLocation()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal confirm delete location-->
+    <div class="modal fade" id="confirmDelete" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Confirm delete clinic location</h4>
+          </div>
+          <div class="modal-body">
+            Are you sure delete {{clinicLocation.name}}?
+          </div>
+          <div class="modal-footer">
+            <button class="btn" (click)="deleteLocation()">Delete</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal confirm delete Member-->
+    <div class="modal fade" id="confirmDeleteMember" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Confirm delete member</h4>
+          </div>
+          <div class="modal-body">
+            Are you sure delete {{member.full_name}}?
+          </div>
+          <div class="modal-footer">
+            <button class="btn" (click)="deleteMember()">Delete</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalIntroduction" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">340B Benefit Introduction</h4>
+          </div>
+          <div class="modal-body">
+            <ckeditor [(ngModel)]="contentIntroduction" debounce="500">
+            </ckeditor>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" (click)="defaultIntroduction()">Default</button>
+            <button class="btn" (click)="updateIntroduction()">Update</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalSavingCardInfo" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Prescription Savings Card</h4>
+          </div>
+          <div class="modal-body">
+            <form class="m-form m-form--fit m-form--label-align-right" #f2="ngForm">
+              <div class="form-group m-form__group row">
+                <label for="RxGRP" class="col-3 col-form-label">RxGRP:</label>
+                <div class="col-9">
+                   <input type="text" [(ngModel)]="SavingCard.rxgrp" #RxGRP="ngModel" required class="form-control m-input" id="RxGRP" name="RxGRP"
+                  placeholder="Enter RxGRP">
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label for="Code" class="col-3 col-form-label">Input Code:</label>
+                <div class="col-9">
+                    <input type="text" [(ngModel)]="SavingCard.input_code" #Code="ngModel" required class="form-control m-input" id="Code" name="Code"
+                    placeholder="Enter Input Code">
+                </div>
+              </div>
+              <small *ngIf="!RxGRP.valid && SavingCard.rxgrp != null" class="text-danger">RxGRP is required.
+              </small>
+              <small *ngIf="!Code.valid && SavingCard.input_code != null" class="text-danger">Input code is required.
+              </small>
+              <div class="form-group">
+                <input type="file" [hidden]="true" (change)="changeImageSavingCard($event)" name="file" id="fileSavingCard">
+                <a (click)="chooseImageSavingCard()" class="btn">Choose Logo</a>
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/81/Williams_Companies_logo.svg/1280px-Williams_Companies_logo.svg.png"
+                  id="ImgSavingCard">
+              </div>
+              <div class="modal-footer">
+                <button class="btn" [disabled]="!f2.valid" (click)="updateSavingCard()">Update</button>
+                <button class="btn" (click)="cancelUpdateSavingCard()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- Modal set Goal-->
+  <div class="modal fade" id="modalSetGoal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Set Goal for {{memberChoosed.full_name}}</h4>
+        </div>
+        <div class="modal-body">
+          <form class="m-form m-form--fit m-form--label-align-right" action="/action_page.php">
+            <div class="form-group m-form__group row">
+              <label for="email" class="col-2 col-form-label">Goal:</label>
+              <input type="number" class="form-control m-input" [(ngModel)]="goal" class="col-10" placeholder="Enter Goal" name="email">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" (click)="setGoal(goal)">SetGoal</button>
+          <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal mapping file -->
+  <div class="modal fade" id="modalMapping" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Map Finacial Statement Data</h4>
+        </div>
+        <div class="modal-body">
+          <app-map-file (submit)="submitMapFile($event)"></app-map-file>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

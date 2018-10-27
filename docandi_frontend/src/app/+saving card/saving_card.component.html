@@ -1,0 +1,120 @@
+
+<div class="savings-card-page">
+	<div class="savings-card-page-inner">
+		<div class="savings-card-content container">
+			<div class="svc-header">
+				<div class="saving-card-logo-page">
+					<img src="assets/images/logo-saving-card.jpg"/>
+				</div>
+				<div class="svc-title">
+					{{'TITLE'|translate}}
+				</div>
+
+				<div class="dropdown-change-language">
+					<select #langSelect (change)="translate.use(langSelect.value);changeLanguage(langSelect.value)">
+						<option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="svc-box-top">
+				<div class="svc-col-left col-md-7">
+					<p class="text1">
+						{{'TEXT1'|translate}}
+					</p>
+					<p class="text2">
+						{{'TEXT2'|translate}}
+					</p>
+					<p class="text3">
+						{{'TEXT3'|translate}}
+					</p>
+					<ul class="list-link">
+						<li>
+
+							<a (click)="print()">
+								<img src="assets/images/svc-icon-prints.jpg"/>
+								<span>{{'PRINT_LABEL'|translate}}</span>
+							</a>
+						</li>
+						<li class="divider-svc">|</li>
+						<li>
+							<a (click)="emailPopup()">
+								<img src="assets/images/svc-icon-a.jpg"/>
+								<span>{{'EMAIL_LABEL'|translate}}</span>
+							</a>
+						</li>
+						<li class="divider-svc">|</li>
+						<li>
+							<a (click)="download()" >
+								<img src="assets/images/svc-icon-download.jpg"/>
+								<span>{{'DOWNLOAD_LABEL'|translate}}</span>
+								</a>
+
+						</li>
+					</ul>
+				</div>
+				<div class="svc-col-left col-md-5">
+					<div class="img-card" id="card">
+						<img src="{{cardUrl_front}}"/>
+					</div>
+				</div>
+			</div>
+			<div class="svc-box-frequently">
+				<h2> {{'LIST_REQUENTLY'|translate}}</h2>
+				<div class="list-frequently">
+					<div class="fre-row">
+						<h3> {{'FRE_ROW_1_H3'|translate}}</h3>
+						<p>{{'FRE_ROW_1_P'|translate}}</p>
+					</div>
+					<div class="fre-row">
+						<h3>{{'FRE_ROW_2_H3'|translate}}</h3>
+						<p>{{'FRE_ROW_2_P'|translate}}</p>
+					</div>
+					<div class="fre-row">
+						<h3> {{'FRE_ROW_3_H3'|translate}}</h3>
+						<p>{{'FRE_ROW_3_P'|translate}}</p>
+					</div>
+					<div class="fre-row">
+						<h3>{{'FRE_ROW_4_H3'|translate}}</h3>
+						<p>{{'FRE_ROW_4_P'|translate}}</p>
+					</div>
+					<div class="fre-row">
+						<h3> {{'FRE_ROW_5_H3'|translate}}</h3>
+						<p> {{'FRE_ROW_5_P'|translate}}</p>
+					</div>
+					<div class="fre-row">
+						<h3>{{'FRE_ROW_6_H3'|translate}}</h3>
+						<p>{{'FRE_ROW_6_P'|translate}}</p>
+					</div>
+					<div class="fre-row">
+						<h3>{{'FRE_ROW_7_H3'|translate}}</h3>
+						<p>{{'FRE_ROW_7_P'|translate}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="emailModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="box-email-card">
+			<form #f="ngForm" role="form">
+			<a class="close-modal-card" data-dismiss="modal">
+				<img src="images/icon-svc-close.jpg"/>
+			</a>
+			<h3>{{'POPUP_TITLE'|translate}}</h3>
+			<input [(ngModel)]="email" name="email" type="text" placeholder="{{'POPUP_PLACEHOLDER'|translate}}"  required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" #emailView="ngModel">
+			<small *ngIf="!emailView.valid && email!=null" class="text-danger"> Email is required and format should be <i>john@doe.com</i>.
+			</small>
+			<h4 *ngIf="sending" class="text-success">Email sending...</h4>
+			<h4 *ngIf="error" class="text-success">Email sent unsuccessfully!</h4>
+			<button (click)="sendEmail()" [disabled]="!f.valid || sending" class="btn btn-sendmail pull-right">{{'POPUP_SEND'|translate}}</button>
+			</form>
+		</div>
+
+	</div>
+</div>
+<div id="printTag" [hidden]="true">
+	<img src="{{cardUrl_front}}" height='400' width='600'/>
+
+	<img src="{{cardUrl_backside}}" height='400' width='600'/>
+</div>

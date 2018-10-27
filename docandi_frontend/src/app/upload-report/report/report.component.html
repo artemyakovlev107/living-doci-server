@@ -1,0 +1,27 @@
+
+<div class="admin-metrics">
+  <div class="wrapper-dashboard_v1">
+    <div class="wrapper-dashboard_v1--inner">
+      <div class="row">
+        <div class="col-md-2 left-side">
+          <div class="dashboard_col_left dashboard_col_left-respon">
+            <ul class="db-list-tab">
+              <li>
+                <a (click)="goto('finacial')" [class.active]="currentPage=='finacial'">Finacial Statements</a>
+              </li>
+              <li>
+                <a (click)="goto('erm')" [class.active]="currentPage=='erm'">EMR</a>
+              </li>
+              <li>
+                <a  (click)="goto('map')" [class.active]="currentPage=='map'">Pharmacy Heat Map</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-10 pdr">
+        <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

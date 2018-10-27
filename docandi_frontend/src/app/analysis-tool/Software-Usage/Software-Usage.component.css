@@ -1,0 +1,68 @@
+
+
+.m-subheader{
+  padding:0;
+}
+.m-widget17 .m-widget17__stats .m-widget17__items .m-widget17__item {
+  position: relative;
+  margin-top: 0rem;
+  background-color: white;
+  margin-bottom: 0.5rem;
+  padding-bottom: 10px;
+}
+.m-widget17 .m-widget17__stats .m-widget17__items .m-widget17__item .m-widget17__subtitle {
+
+  margin-top: 0rem;
+}
+.m-widget17 .m-widget17__stats {
+  display: table;
+  width: 100%;
+  margin: 0 auto 0 auto;
+}
+.m-widget17 .m-widget17__stats .m-widget17__items.m-widget17__items-col1 {
+  width: 33.3%;
+}
+.m-widget17 .m-widget17__stats .m-widget17__items .m-widget17__item .m-widget17__icon {
+
+  margin-left: 0.3rem;
+}
+.m-subheader .m-subheader__title {
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+* {
+  font-family: "Montserrat", sans-serif;
+}
+m-subheader .m-subheader__title {
+  display: inline-block;
+  padding: 7px 25px 7px 0;
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 1.55rem;
+  font-weight: 500;
+  vertical-align: middle;
+  margin: 0 15px 0 0;
+  color: #3f4047;
+}
+@media screen and (max-width: 1200px) {
+  .m-subheader {
+    padding-top:20px;
+    padding-left:20px;
+  }
+}
+.ngx-datepicker-container[_ngcontent-c3] .ngx-datepicker-calendar-container[_ngcontent-c3] {
+  position: absolute;
+  width: 300px;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,.08);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.08);
+  border: 1px solid #dfe3e9;
+  border-radius: 4px;
+  z-index: 50;
+}
+#sel1{
+  padding:0;  
+  margin-top: 10px;
+  height: 34px;
+}

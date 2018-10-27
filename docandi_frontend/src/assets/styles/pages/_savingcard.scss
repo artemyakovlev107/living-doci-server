@@ -1,0 +1,200 @@
+
+
+/*
+Saving card
+----------------------------------*/
+.savings-card-page{
+
+}
+.savings-card-page{
+  background: #ffffff;
+
+}
+.saving-card-logo-page{
+  text-align: center;
+  margin-bottom:20px;
+}
+.savings-card-content{
+  position: relative;
+  overflow: hidden;
+}
+.svc-header{
+  overflow: hidden;
+  margin-bottom:50px;
+}
+.svc-title{
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+}
+.dropdown-change-language{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: 1px solid #000;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  width: 120px;
+  border-radius: 5px;
+  height: 35px;
+}
+.dropdown-change-language select{
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+.svc-box-top{
+  overflow: hidden;
+  clear: both;
+  margin-bottom:150px;
+}
+.svc-col-left p{
+  font-size:16px;
+  color: #000;
+}
+.svc-col-left .text2{
+  margin:30px 0;
+}
+ul.list-link{
+  list-style: none;
+  margin:40px 0 40px 0;
+  padding:0;
+  display: block;
+  overflow: hidden;
+}
+ul.list-link li{
+  float: left;}
+ul.list-link li a{
+  font-size:14px;
+  color: #4393ac;;
+}
+
+.svc-box-frequently{
+  text-align: center;
+}
+.svc-box-frequently > h2{
+  font-size:27px;
+  margin-bottom:50px;
+}
+.svc-box-frequently .list-frequently{
+  display: inline-block;
+  text-align: left;
+}
+.svc-box-frequently .list-frequently .fre-row{
+  overflow: hidden;
+  margin-bottom:30px;
+}
+.svc-box-frequently .list-frequently .fre-row h3{
+  color: #000;
+  font-size:16px;
+  font-weight:bold;
+  margin:0 0 10px 0;
+  padding:0;
+  text-align: left;
+}
+
+.svc-box-frequently .list-frequently .fre-row p{
+  color: #000;
+  font-size:16px;
+  margin:0;
+  padding:0;
+}
+
+.savings-card-page-inner{
+  background: url(../../images/bg-savingcard.jpg) no-repeat scroll left bottom;
+  background-position: center bottom;
+  background-size: 100% 60%;
+
+}
+@media(max-width: 991px){
+  .savings-card-page-inner{
+    -webkit-background-size:100%;
+    background-size:100%;
+  }
+}
+.modal-email-card{
+  text-align: center;
+  overflow: hidden;
+  background: #f3f3f3;
+
+}
+.img-card{
+  overflow: hidden;
+  clear: both;
+}
+.img-card img{
+  width:100%;
+}
+.box-email-card{
+  width:450px;
+  padding:40px;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background: #ffffff;
+  margin-top:10px;
+}
+.close-modal-card{
+  position: absolute;
+  right:10px;
+  top:10px;
+}
+.box-email-card h3{
+  font-size:22px;
+  color: #000;
+  margin:0;
+  padding:0;
+  line-height:1.5;
+  margin:0 0 20px 0;
+}
+.box-email-card input{
+  border:1px solid #c3c3c3;
+  width:100%;
+  height:60px;
+  padding:0 20px;
+  line-height:60px;
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  border-radius:3px;
+}
+.box-email-card .btn-send-card{
+  background: #8bc741;
+  color: #ffffff;
+  font-size:14px;
+  text-align: center;
+  padding:7px 20px;
+  float: left;
+  display: block;
+  margin:20px 0 0 0;
+}
+.btn-sendmail{
+  margin-top: 20px;
+}
+.question-tabs.row{
+  .row{
+    ul.benefit{
+      margin-top:10px;
+      padding-top:10px;
+      padding-left:64px;
+    }
+    input[type=checkbox]{
+      margin-top:10px;
+      width:24px;
+    }
+
+    label.col-sm-10{
+      width:calc(100% - 60px);
+      width:-webkit-calc(100% - 60px);
+      width:-moz-calc(100% - 60px);
+    }
+  }
+}
+@media(max-width: 1199px){
+  .three40-b-page .container{
+    padding:40px 20px;
+  }
+}
+

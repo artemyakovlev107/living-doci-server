@@ -1,0 +1,265 @@
+<!-- <div class="account-settings-page animate gradient">
+    <h2 class="header-setting">Account Settings</h2>
+
+    <form class="col-md-12">
+        <div class="container" style="width:100%">
+            <div class="row text-xs-center">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <img src="{{currentUser.avatarUrl}}" class="avatar-large">
+                    </div>
+                    <br>
+                    <h3>{{currentUser.full_name}}</h3>
+                </div>
+            </div>
+            <div class="row">
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label text-xs-right">Address</label>
+                        <div class="col-sm-9">
+                            <div class="field form-control-label">{{currentUser.address}}-{{currentUser.city}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label text-xs-right" for="inputemail">Email</label>
+                        <div class="col-sm-9">
+                            <div class="field form-control-label" id="inputemail">{{currentUser.email}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label text-xs-right" for="password">Password</label>
+                        <div class="col-sm-9">
+                            <div class="field form-control-label" id="password">********</div>
+                        </div>
+                    </div>
+                    <div *ngIf="editPassword" class="col-sm-9 form-group">
+                        <input type="password" [(ngModel)]="oldPass" class="form-control inputSpace"  name="oldPassword"  placeholder="Old Password">
+                        <input type="password" [(ngModel)]="newPass" class="form-control inputSpace"  name="password"  placeholder="New Password">
+                        <input type="password" [(ngModel)]="newPassConfirm" class="form-control inputSpace  " name="confirmPassword" placeholder="Confirm Password">
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <h4 class="text-danger">{{mes}}</h4>
+            <div class="row pull-right"  *ngIf="!editPassword"><a (click)="showEdit()" class="small" >Update Password</a></div>
+            <div class="row"  *ngIf="editPassword">
+                <div class="pull-rig">
+                    <button [disabled]="newPass!=newPassConfirm" (click)="changePass()" class="btn btn-primary">Save</button>
+                    <button class="btn btn-primary" (click)="cancelEdit()" >Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> -->
+
+<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body" style="padding-top:100px;">	
+    <div class="animate" style="width: 100%">
+    <div class="m-subheader ">
+            <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title">Account Settings</h3>
+			
+                    </div>
+            </div>
+            <br>
+    </div>
+    <div class="m-content">
+        <div class="m-portlet">
+            <div class="row">
+                <div class="col-md-6">
+                    <!--begin::Form-->
+                    <form class="m-form">
+                        <div class="m-portlet__body container">
+                                <img alt="" class="avatar-img m--img-rounded m--marginless m--img-centered" src="{{currentUser.avatarUrl}}">	
+                                <br>
+                                <div style=" margin-top:10px; margin-bottom:10px;">
+                                        <a href="javascript:void(0)" data-toggle="modal"   class="small m--font-info" style="color: #36A3F7;" (click)="showmodalById('my-avatars');showMyavatar()">
+                                                Change avatar
+                                        </a>
+                                </div>
+                      
+                                <br>
+                                <div class="row" style="padding-left:10px;">		
+                                    <div class="form-group m-form__group col-md-9">
+                                        <label for="example_input_full_name"><b>Full Name:</b></label>
+                                        <input type="text" class="form-control m-input" placeholder="Enter full name" value="{{currentUser.full_name}}">
+                                    </div>
+                                    <div class="form-group m-form__group col-md-9">
+                                        <label for="exampleSelect1"><b>Address:</b></label>
+                                        <select class="form-control m-input" id="exampleSelect1" >
+                                            <option *ngFor="let clinic of listClinic">{{clinic.address}} - {{clinic.city}}</option>
+                       
+                                        </select>
+                                    </div>
+                                    <div class="form-group m-form__group col-md-9">
+                                            <label for="exampleInputEmail1"><b> Address:</b></label>
+                                            <input type="email" class="form-control m-input" placeholder="Enter  address" value="{{currentUser.address}}-{{currentUser.city}}">
+                                     </div>
+                                    <div class="form-group m-form__group col-md-9">
+                                        <label for="exampleInputEmail1"><b>Email address:</b></label>
+                                        <input type="email" class="form-control m-input" placeholder="Enter email" value="{{currentUser.email}}">
+                                    </div>
+                                    <div class="form-group m-form__group col-md-9 col-9">
+                                        <label for="exampleInputPassword1"><b>Password</b></label>
+                                        <div id="pwd_input">
+                                            <input type="password" class="form-control m-input" id="exampleInputPassword1" placeholder="********" >
+                                            <div id="pwd_right">
+                                                <a (click)="showEdit()" class="small m--font-info" style="color: #36A3F7;"><b>Update Password</b></a>
+                                            </div>
+                                        </div>        
+                                    </div>
+                                    <div *ngIf="editPassword" class="col-md-9 form-group">
+                                            <input type="password" [(ngModel)]="oldPass" class="form-control inputSpace"  name="oldPassword"  placeholder="Old Password">
+                                            <input type="password" [(ngModel)]="newPass" class="form-control inputSpace"  name="password"  placeholder="New Password">
+                                            <input type="password" [(ngModel)]="newPassConfirm" class="form-control inputSpace  " name="confirmPassword" placeholder="Confirm Password">
+                                    </div>
+                                    <h4 class="text-danger">{{mes}}</h4>
+                                    <div class="row m-portlet__foot m-portlet__foot--fit"  *ngIf="editPassword">
+                                        <div class="m-form__actions m-form__actions">
+                                            <button [disabled]="newPass!=newPassConfirm" (click)="changePass()" class="btn btn-info">Save</button>
+                                            &nbsp;
+                                            <button class="btn btn-info" (click)="cancelEdit()" >Cancel</button>
+                                        </div>
+                                    </div>
+                            </div>	
+                            
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions">
+                                <button type="reset" class="btn btn-info">Update</button>
+
+                            </div>
+                        </div>
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- model My avatar -->
+<div class="modal fade" id="my-avatars" role="dialog">
+        <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Your Avatar</h4>
+                          <button (click)="cancelChange('avatar')" type="button" class="close" data-dismiss="modal">&times;</button>
+                         
+                    </div>
+                    <div class="modal-body modal-body-isolation">
+  
+                          <div class="modal-isolation">
+                                <div class="col-left">
+                                      <div class="logo">
+                                            <img src="{{currentUser.avatarUrl}}" />
+                                            <p>Current Avatar</p>
+                                      </div>
+                                </div>
+                                <div class="col-right">
+                                      <ul class="md-top-menu">
+                                            <li *ngFor="let item of listCategoryDisplay">
+                                                  <a *ngIf="item.id!=1" (click)="getAvatarBought(item.id)" [class.active]="item.id === flagCategory" href="javascript:void(0)">
+                                                        {{item.name}}
+                                                  </a>
+                                            </li>
+                                      </ul>
+                                      <div class="md-list-unlocked-and-locked">
+                                            <a class="box-column" *ngFor="let item  of listAvatarBoughtDisplay" (click)="chooseAvatarToChange(item)">
+                                                  <div class="img" [class.box-shop]="item.id == idAvatarChoosed">
+                                                        <img src="{{item.url}}">
+                                                  </div>
+                                                  <div class="locked-title">
+                                                        <p class="text-center">{{item.name}}</p>
+                                                  </div>
+                                            </a>
+                                      </div>
+                                </div>
+                          </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="button" class="btn btn-info" [disabled]="!avatarToChange" (click)="changeAvatar()">Update</button>
+                          <button type="button" class="btn btn-info" data-dismiss="modal" (click)="cancelChange('avatar')">Close</button>
+                    </div>
+              </div>
+        </div>
+  </div>
+<style type="text/css">  
+    * {
+       font-weight: 500;
+       font-family: "Montserrat", sans-serif;
+    }
+    .m-subheader__title{
+        font-family: "Montserrat", sans-serif;
+        font-weight:600;
+    }
+   .m-content {
+       background-color:#fff;
+       margin-bottom: 60px;
+   }
+   .m-subheader{
+       padding-top: 0;
+   }
+   .m-portlet {
+       padding: 25px;
+    }
+
+
+   @media screen and (max-width: 767px) {
+       .m-content {
+       background-color:#fff;
+       width: 100%;
+       height: auto;
+       margin-left:0%;
+       margin-bottom: 60px; }
+     
+   }
+   #pwd_input{
+       position:relative;
+       width: 100%;
+       margin-left: 0;
+   }
+    .avatar-img{
+        width:100px;
+        height:100px;
+    }
+   .m-body .m-content {
+    padding: 0;
+   }
+   #pwd_right{
+       position: absolute;
+       right: -100%;
+       top: 0;
+       width: 100%;
+       padding-left: 30px;
+       padding-top: 10px;
+   }
+   .btn{
+
+       background: #36A3F7;
+   }
+
+    .modal .modal-content .modal-body {
+        padding: 0px;
+    }
+    .modal-isolation .col-left .logo {
+
+    padding: 0px;
+    padding-top: 20px;
+}
+.modal-isolation .col-right .md-list-unlocked-and-locked .box-column img {
+    width: 100%;
+    height: auto;
+}
+</style>

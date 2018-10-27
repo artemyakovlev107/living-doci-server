@@ -1,0 +1,12 @@
+@import '../bootstrap/variables-midnight-blue';
+@import '../bootstrap/variables';
+@import "variables";
+@import 'app-base';
+
+#chart-patients-2 .highcharts-container {
+  max-height:350px;
+}
+.highcharts-credits{
+  display: none;
+}
+

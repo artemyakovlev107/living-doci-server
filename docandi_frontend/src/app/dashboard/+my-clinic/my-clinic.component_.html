@@ -1,0 +1,444 @@
+<div class="my-clinic-page animate">
+    <h2 class="header">{{currentClinic.name}}</h2>
+    <form class="col-lg-12 col-xl-10 col-xl-offset-1 ">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 text-xs-center">
+
+            <h3 *ngIf="!editClinicItem.id">{{currentClinic.name}}</h3>
+  
+            <div class="col-sm-offset-3 col-sm-6 form-group" *ngIf="editClinicItem.id">
+              <input type="text" class="form-control" name="clinicName" [(ngModel)]="editClinicItem.name" placeholder="Full Name">
+            </div>
+            <div class="row">
+              <div class="row pull-right" *ngIf="!showEditClinic">
+                <a class="small" (click)="editClinic()">Edit Name & Logo</a>
+              </div>
+              <br/>
+              <div class="row pull-right" *ngIf="!showEditClinic">
+                <a class="small" (click)="showModalIntroduction()">340B Benefit Introduction</a>
+              </div>  
+              <br/>
+              <div class="row pull-right" *ngIf="!showEditClinic">
+                <a class="small" (click)="showModalInfoSavingCard()">Prescription Savings Card</a>
+              </div>
+              <div class="row pull-right" *ngIf="showEditClinic">
+                <button class="btn" (click)="UpdateClinic()">Save Change</button>
+                <button class="btn" (click)="cancelEditClinic()">Cancel</button>
+              </div>
+  
+              <div class="row" *ngIf="editClinicItem.id">
+                <button class="pull-left btn btn-primary" (click)="cancelEditClinic()">Cancel</button>
+                <button class="pull-left btn btn-primary btn-bordered" (click)="saveClinic()">Save</button>
+              </div>
+  
+            </div>
+            <div class="row pull-right" (click)="showMaping()">
+              <a class="small">Mapping Data</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <hr>
+        </div>
+        <div class="row">
+          <div class="card">
+            <div class="card-header card-primary card-inverse">
+              <span class="card-title">Clinic Locations</span>
+            </div>
+            <div class="card-block">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                    <th>Phone</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr *ngFor="let location of listClinicLocation;let i = index" (mouseenter)="location.showRow = true" (mouseleave)="location.showRow = false">
+                    <td>{{location.name}}</td>
+                    <td>{{location.address}}</td>
+                    <td>{{location.city}}</td>
+                    <td>{{location.state}}</td>
+                    <td>{{location.zip}}</td>
+                    <td>{{location.phone}}</td>
+                  </tr>
+                  <tr *ngIf="listClinicLocation.length == 0">No Locations</tr> -->
+  
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer">
+              <div class="col-lg-offset-9 col-lg-3">
+                <a class="btn btn-primary btn-rounded btn-block " (click)="showModalAddEdit('Add','')">
+                  <i class="fa fa-edit"></i>Add Location
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <hr>
+        </div>
+        <form #f="ngForm">
+          <div class="row">
+            <div class="card">
+              <div class="card-header card-primary card-inverse">
+                <span class="card-title">Members</span>
+              </div>
+              <div class="card-block">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th class="action-column"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let member of listMember;let i=index" (mouseenter)="member.showRow = true" (mouseleave)="member.showRow = false">
+                      <td>{{member.full_name}}</td>
+                      <td>{{member.email}}</td>
+                      <td *ngIf="!member.edit">{{member.role>=1?'admin':'member'}}</td>
+                      <td *ngIf="member.edit">
+                        <select name="role" [(ngModel)]="memberAdd.role">
+                          <option value="0">Member</option>
+                          <option value="1">Admin</option>
+                        </select>
+                      </td>    
+                      <!--<td *ngIf="editMemberItem.id === member.id">-->
+                      <!--<select name="role" [(ngModel)]="newRole">-->
+                      <!--<option value="{{memberEdit.role}}">Member</option>-->
+                      <!--<option value="{{memberEdit.role}}">Admin</option>-->
+                      <!--</select>-->
+                      <!--</td>-->
+  
+                      <td class="action-column pull-right">
+                        <div>
+                          <div class="pull-right action_buttons" *ngIf="(member.showRow && currentUser.role > member.role) || member.edit">
+                            <Button class="btn btn-danger btn-rounded pull-right" (click)="setGoalModal(member)">
+                              <i class="fa fa-times"></i>Set Goal
+                            </Button>
+                            <Button class="btn btn-danger btn-rounded" (click)="confirmDeleteMember(member,i)">
+                              <i class="fa fa-times"></i>Remove
+                            </Button>
+                            <Button *ngIf="!member.edit" class="btn btn-danger btn-rounded" (click)="member.edit = true;">
+                              <i class="fa fa-times"></i>Edit
+                            </Button>
+                            <Button *ngIf="member.edit" class="btn btn-danger btn-rounded" (click)="updateRole(member.id)">
+                              <i class="fa fa-times"></i>Update
+                            </Button>
+                          </div>
+  
+                        </div>
+                      </td>
+  
+                    </tr>
+  
+                    <!--NEW MEMBER-->
+                    <tr *ngIf="editMemberItem.id === 'NEW'">
+                      <td>
+                        <input [(ngModel)]="memberAdd.full_name" type="text" name="name" #name="ngModel" class="form-control input-underline" required
+                          placeholder="Full Name">
+                        <small *ngIf="!name.valid" class="text-danger">
+                          Full Name is required.
+                        </small>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="memberAdd.email" type="text" name="email" class="form-control input-underline" required #email="ngModel"
+                          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" placeholder="Email">
+                        <small *ngIf="!email.valid" class="text-danger">
+                          Email is required and format should be
+                          <i>john@doe.com</i>.
+                        </small>
+                      </td>
+                      <td>
+  
+                        <select name="role" [(ngModel)]="memberAdd.role">
+                          <option value="0">Member</option>
+                          <option value="1">Admin</option>
+                        </select>
+  
+                      </td>
+  
+                      <td class="action-column pull-right">
+  
+  
+                      </td>
+  
+                    </tr>
+                    <tr *ngIf="showMess">
+                      <span class="text-center bg-danger">{{errorMessage}}</span>
+                    </tr>
+                    <tr *ngIf="showMess">
+                      <span class="text-center bg-success">{{successMessage}}</span>
+                    </tr>
+                    <tr *ngIf="listMember.length == 0">No Members</tr>
+  
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer">
+                <div class="col-lg-offset-9 col-lg-3">
+                  <Button *ngIf="editMemberItem.id !== 'NEW'" class="btn btn-primary btn-rounded btn-block " (click)="newMember()">
+                      <i class="la la-edit"></i> </i>Invite Member
+                  </Button>
+                  <div *ngIf="editMemberItem.id === 'NEW'" class="pull-right action_buttons">
+                    <Button class="btn btn-primary btn-rounded" [disabled]="sending" (click)="inviteMember()">
+                      <i class="la la-edit"></i>Save
+                    </Button>
+                    <Button Class="btn btn-primary btn-rounded" (click)="cancelEditMember()">
+                      <i class="fa fa-edit"></i>Cancel
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </form>
+  
+  
+      </div>
+    </form>
+  </div>
+  
+  <!-- Modal add  -->
+  <div class="modal fade" id="AddEditModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{typeModal}} clinic location</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" #f="ngForm">
+            <div class="form-group">
+              <label for="address" class="col-sm-2 control-label">Address</label>
+              <div class="col-sm-10">
+                <input type="text" [(ngModel)]="clinicLocation.address" name="address" required class="form-control" id="address" placeholder="address"
+                  #adr="ngModel">
+                <small *ngIf="!adr.valid && clinicLocation.address != null" class="text-danger">Address is required.
+                </small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-sm-2 control-label">Phone</label>
+              <div class="col-sm-10">
+                <input type="text" required [(ngModel)]="clinicLocation.phone" class="form-control" name="phone" id="phone" placeholder="Phone Number"
+                  #phone="ngModel">
+                <small *ngIf="!phone.valid && clinicLocation.phone != null" class="text-danger">Phone number is required.
+                </small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Name" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" required [(ngModel)]="clinicLocation.name" name="name" class="form-control" id="Name" placeholder="Name"
+                  #name="ngModel">
+                <small *ngIf="!name.valid && clinicLocation.name != null" class="text-danger">Clinic name is required.
+                </small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Email" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" [(ngModel)]="clinicLocation.email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                  name="email" class="form-control" id="Email" placeholder="Email" #email="ngModel">
+                <small *ngIf="!email.valid && clinicLocation.email!=null" class="text-danger"> Email is required and format should be
+                  <i>john@doe.com</i>.
+                </small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="city" class="col-sm-2 control-label">City</label>
+              <div class="col-sm-10">
+                <input type="text" [(ngModel)]="clinicLocation.city" name="city" required class="form-control" id="city" placeholder="City"
+                  #city="ngModel">
+                <small *ngIf="!city.valid && clinicLocation.city != null" class="text-danger">Clinic city is required.
+                </small>
+              </div>
+  
+            </div>
+            <div class="form-group">
+              <label for="state" class="col-sm-2 control-label">State</label>
+              <div class="col-sm-10">
+                <input type="text" [(ngModel)]="clinicLocation.state" required name="state" class="form-control" id="state" placeholder="State"
+                  #state="ngModel">
+                <small *ngIf="!state.valid && clinicLocation.state != null" class="text-danger">Clinic city is required.
+                </small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="zip" class="col-sm-2 control-label">Zip Code</label>
+              <div class="col-sm-10">
+                <input type="text" [(ngModel)]="clinicLocation.zip" required name="zip" class="form-control" id="zip" placeholder="Zip" #zip="ngModel">
+                <small *ngIf="!zip.valid && clinicLocation.zip != null" class="text-danger">Zipcode is required.
+                </small>
+              </div>
+            </div>
+            <div class="form-group">
+              <div for="file" class="col-sm-4">
+                <a class="btn" (click)="chooseImage()">Choose Image</a>
+              </div>
+              <div class="col-sm-8">
+                <input type="file" [hidden]="true" (change)="changeImage($event)" name="file" id="file">
+  
+                <!-- <img  id="image"> -->
+                <img id="image" src="{{clinicLocation.image_url}}">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="typeModal=='Add'" (click)="getLatLngForAdd(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)"
+            [disabled]="!f.valid || Image==null" class="btn">Add</button>
+          <button *ngIf="typeModal=='Update'" (click)="getLatLngForUpdate(clinicLocation.address+','+clinicLocation.city+','+clinicLocation.state)"
+            [disabled]="!f.valid" class="btn">Update</button>
+          <button class="btn" (click)="hideModalLocation()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal confirm delete location-->
+  <div class="modal fade" id="confirmDelete" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirm delete clinic location</h4>
+        </div>
+        <div class="modal-body">
+          Are you sure delete {{clinicLocation.name}}?
+        </div>
+        <div class="modal-footer">
+          <button class="btn" (click)="deleteLocation()">Delete</button>
+          <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal confirm delete Member-->
+  <div class="modal fade" id="confirmDeleteMember" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirm delete member</h4>
+        </div>
+        <div class="modal-body">
+          Are you sure delete {{member.full_name}}?
+        </div>
+        <div class="modal-footer">
+          <button class="btn" (click)="deleteMember()">Delete</button>
+          <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalIntroduction" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">340B Benefit Introduction</h4>
+        </div>
+        <div class="modal-body">
+          <ckeditor [(ngModel)]="contentIntroduction" debounce="500">
+  
+          </ckeditor>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" (click)="defaultIntroduction()">Default</button>
+          <button class="btn" (click)="updateIntroduction()">Update</button>
+          <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalSavingCardInfo" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Prescription Savings Card</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-inline" #f2="ngForm">
+            <div class="form-group">
+              <label for="RxGRP">RxGRP:</label>
+              <input type="text" [(ngModel)]="SavingCard.rxgrp" #RxGRP="ngModel" required class="form-control" id="RxGRP" name="RxGRP"
+                placeholder="Enter RxGRP">
+  
+            </div>
+            <div class="form-group">
+              <label for="Code">Input Code:</label>
+              <input type="text" [(ngModel)]="SavingCard.input_code" #Code="ngModel" required class="form-control" id="Code" name="Code"
+                placeholder="Enter Input Code">
+            </div>
+            <br/>
+            <small *ngIf="!RxGRP.valid && SavingCard.rxgrp != null" class="text-danger">RxGRP is required.
+            </small>
+            <small *ngIf="!Code.valid && SavingCard.input_code != null" class="text-danger">Input code is required.
+            </small>
+            <div class="form-group">
+              <input type="file" [hidden]="true" (change)="changeImageSavingCard($event)" name="file" id="fileSavingCard">
+              <a (click)="chooseImageSavingCard()" class="btn">Choose Logo</a>
+              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/81/Williams_Companies_logo.svg/1280px-Williams_Companies_logo.svg.png"
+                id="ImgSavingCard">
+            </div>
+            <div class="modal-footer">
+              <button class="btn" [disabled]="!f2.valid" (click)="updateSavingCard()">Update</button>
+              <button class="btn" (click)="cancelUpdateSavingCard()">Cancel</button>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <!-- Modal set Goal-->
+  <div class="modal fade" id="modalSetGoal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Set Goal for {{memberChoosed.full_name}}</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-inline" action="/action_page.php">
+            <div class="form-group">
+              <label for="email">Goal:</label>
+              <input type="number" [(ngModel)]="goal" class="form-control" placeholder="Enter Goal" name="email">
+            </div>
+          </form>
+  
+        </div>
+        <div class="modal-footer">
+          <button class="btn" (click)="setGoal(goal)">SetGoal</button>
+          <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal mapping file -->
+  <div class="modal fade" id="modalMapping" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Map Finacial Statement Data</h4>
+        </div>
+        <div class="modal-body">
+          <app-map-file (submit)="submitMapFile($event)"></app-map-file>
+        </div>
+      </div>
+    </div>
+  </div>
+  

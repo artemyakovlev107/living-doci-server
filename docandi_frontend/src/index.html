@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DOC&I</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon/favicon-PROD.ico" type="image/x-icon">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto:300,400,500,600,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpMC6sbIMGk3ffgCcRmjVeNuGc2Sr1X_c&libraries=visualization"
+  async defer></script>
+  <!-- inject:css -->
+  
+
+  <link rel="stylesheet" href="assets/css/savingcard.css">
+  <link rel="stylesheet" href="assets/css/analysis.css">
+  <link rel="stylesheet" href="assets/css/docandi-update.css">
+  <link rel="stylesheet" href="assets/css/home.component.css"> 
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/template/demo2/base/style.bundle.css">
+  <!-- <link rel="stylesheet" href="./assets/css/vendors/base/vendors.bundle.css" >  -->
+  <link rel="stylesheet" href="assets/css/app.css">
+
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/highcharts-more.src.js"></script>  
+  <script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script>
+</head>
+
+<body class="m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default">
+  <style type="text/css">
+    body,
+    html {
+      height: 100%;
+      background-color: #F5F5F6;
+    }
+  </style>
+  
+  <mApp>
+    <div class="spinner"></div>
+  </mApp>
+
+  <script>
+    // Fixes undefined module function in SystemJS bundle
+    function module() { }
+  </script>
+
+  <!-- shims:js -->
+  <!-- endinject -->
+  <!-- 
+  <% if (BUILD_TYPE === 'dev') { %>
+  <script src="<%= APP_BASE %>app/system-config.js"></script>
+  <% } %> -->
+
+  <!-- libs:js -->
+  <!-- endinject -->
+  <!-- inject:js -->
+  <!-- endinject -->
+
+  <!-- <% if (BUILD_TYPE === 'dev') { %>
+  <script>
+  System.import('<%= BOOTSTRAP_MODULE %>')
+    .catch(function (e) {
+      console.error(e.stack || e,
+        'Not expecting this error? Report it at https://github.com/mgechev/angular-seed/issues');
+    });
+  </script>
+  <% } %> -->
+
+</body>
+</html>   

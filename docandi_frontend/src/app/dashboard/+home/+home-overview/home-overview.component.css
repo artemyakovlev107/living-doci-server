@@ -1,0 +1,126 @@
+
+#chart-patients-2 .highcharts-container {
+  width:100% !important;
+}
+
+@media (max-width: 1024px) {
+  .m-mat-dialog-container__wrapper {
+      max-width: 90%
+  }
+  .m-mat-dialog-container__wrapper .mat-dialog-container .m-portlet .m-portlet__body {
+      overflow: auto;
+      max-height: 60vh
+  }
+}
+.m--font-info {
+  font-weight: 600;
+}
+.m-widget14 .m-widget14__header .m-widget14__title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.m-widget14 .m-widget14__header .m-widget14__desc {
+
+  margin-top: 0.2rem;
+  font-size: 1.0rem;
+  font-weight: 500;
+}
+.m-widget1 .m-widget1__item .m-widget1__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.m-widget1 .m-widget1__header .m-widget1__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  font-family: "Montserrat", sans-serif;
+}
+.m-widget1 .m-widget1__header .m-widget1__desc {
+
+margin-top: 0.2rem;
+font-size: 1.1rem;
+font-weight: 600;
+font-family: "Montserrat", sans-serif;
+}
+
+.m-widget1 .m-widget1__item .m-widget1__desc {
+  display: inline-block;
+  margin-top: 0.21rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.m-portlet__head-text {
+
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding-top:27px;
+  font-family: "Montserrat", sans-serif;
+}
+.m-portlet .m-portlet__head .m-portlet__head-caption{
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding-left: 1.1rem;
+}
+.m-widget14 .m-widget14__header .m-widget14__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text {
+
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+
+}
+.m-widget3 .m-widget3__item .m-widget3__header .m-widget3__info .m-widget3__username {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.m-widget4 .m-widget4__item .m-widget4__info .m-widget4__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+nav .nav-pills .nav-pills--brand .nav-link{
+  background: #36A3F7;
+  color: #fff;
+}
+.nav.nav-pills.nav-pills--brand .nav-link.active {
+  background:#36a3f7;
+  color: #fff;
+} 
+
+.m-widget4 .m-widget4__item .m-widget4__ext .m-widget4__number {
+  font-size: 1.4rem;
+  font-weight: 650;
+  color: #36a3f7 !important;
+}
+
+.m-widget2 .m-widget2__item .m-widget2__checkbox {
+ 
+  padding-top: 0.2rem;
+}
+
+.m-portlet .m-portlet__head {
+
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+}
+.m-widget2 .m-widget2__item .m-widget2__desc .m-widget2__text {
+
+  font-weight: 500;
+}
+#today_toppatient .m-widget4__item{
+  padding-top:1.4rem; 
+  padding-bottom:1.6rem
+}
+.m-widget4__img--logo img{
+  border-radius: 50%;
+   width:3.0rem; 
+   vertical-align: middle;
+}

@@ -1,0 +1,230 @@
+<div class="row content-tab animate">
+      <div class="col-lg-9 col-xs-12 achi-padding__row">
+            <div class="content-row-2">
+                  <div class="achie-list-my-starts">
+                        <div class="achie-column">
+                              <div class="img">
+                                    <img src="assets/images/achie-image-1.png" />
+                              </div>
+                              <h2>MY STATS </h2>
+                        </div>
+                        <div class="achie-column">
+                              <h2>{{month_point|number}}</h2>
+                              <p>Monthly Points</p>
+                        </div>
+                        <div class="achie-column">
+                              <h2>{{total_point | number}}</h2>
+                              <p>Lifetime Points</p>
+                        </div>
+                        <app-tooltip *ngIf="pageView=='my-achievements' && stepView == 1"></app-tooltip>
+                  </div>
+            </div>
+            <div style="position: relative">
+                  <div id="container">
+                  </div>
+                  <app-tooltip *ngIf="pageView=='my-achievements' && stepView == 0"></app-tooltip>
+            </div>
+            
+            <!-- <chart style="display: block" [options]="options"></chart> -->
+      </div>
+      <div class="col-lg-3 col-xs-12 achi-padding__row">
+            <div class="content-achie-right">
+                  <div class="col-info">
+                        <a href="javascript:void(0)" data-toggle="modal" (click)="showmodalById('modal')">
+                              <img src="assets/images/achie-icon-1.png" />
+                              <br/> {{totalTokens}} Tokens</a>
+                        <app-tooltip *ngIf="pageView=='my-achievements' && stepView == 2"></app-tooltip>
+                  </div>
+                  <div style="position: relative">
+                        <div class="col-info">
+                              <a href="javascript:void(0)" data-toggle="modal" (click)="showmodalById('my-avatars');showMyavatar()">
+                                    <img src="{{currentUser.avatarUrl}}" />
+                                    <br/> My Avatars</a>
+                        </div>
+                        <div class="col-info">
+                              <a href="javascript:void(0)" (click)="showmodalById('my-background'); setOldBackground()">
+                                    <img src="{{currentUser.backgroundUrl}}" />
+                                    <br/>My Backgrounds</a>
+                        </div>
+                        <app-tooltip *ngIf="pageView=='my-achievements' && stepView == 3"></app-tooltip>
+                  </div>
+            </div>
+      </div>
+</div>
+<div class="modal bootstrap-dialog fade" id="modal" role="dialog">
+      <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Point Shop</h4>
+                  </div>
+                  <div class="modal-body modal-body-isolation">
+                        <div class="modal-isolation">
+                              <div class="col-left">
+                                    <div class="logo">
+                                          <img src="assets/images/icon-tokens.png" />
+                                          <p>{{totalTokens}} Tokens</p>
+                                    </div>
+                                    <ul class="md-menu-left">
+                                          <li>
+                                                <a (click)="changeTypeShop('avatar')" href="javascript:void(0)" [class.active]="typeShop ==='avatar'">
+                                                      Avatars
+                                                </a>
+                                          </li>
+                                          <li>
+                                                <a (click)="changeTypeShop('background')" href="javascript:void(0)" [class.active]="typeShop ==='background'">
+                                                      Backgrounds
+                                                </a>
+                                          </li>
+                                    </ul>
+                              </div>
+                              <div class="col-right">
+                                    <ul class="md-top-menu">
+                                          <li *ngFor="let item of listCategoryDisplay">
+                                                <a *ngIf="item.id!=1" (click)="getAvatar(item.id)" [class.active]="item.id === flagCategory" href="javascript:void(0)">
+                                                      {{item.name}}
+                                                </a>
+                                          </li>
+                                    </ul>
+                                    <div class="md-list-unlocked-and-locked">
+                                          <div class="box-column" *ngFor="let item  of listAvatarDisplay" [class.box-shop]="item.id==idAvatarChoosed" (click)="chooseItemToPurchase(item)">
+                                                <div class="img">
+                                                      <img *ngIf="item.reward_type == 1" src="{{item.url}}" />
+                                                      <img *ngIf="item.reward_type == 2" src="{{item.url}}" />
+                                                </div>
+                                                <div class="locked-title">
+                                                      <a href="javascript:void(0)" [ngClass]="item.owned =='1'?'unlocked':'locked'" data-target="#purchase"> {{item.owned =='1'?'purchased':'unlocked'}}
+                                                            <span class="cost" *ngIf="item.owned =='0'">{{item.cost}}</span>
+                                                      </a>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" [disabled]='!itemToPurchase' (click)="modalConfirmPurchase()">Purchase</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- model My avatar -->
+<div class="modal fade" id="my-avatars" role="dialog">
+      <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button (click)="cancelChange('avatar')" type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Your Avatar</h4>
+                  </div>
+                  <div class="modal-body modal-body-isolation">
+
+                        <div class="modal-isolation">
+                              <div class="col-left">
+                                    <div class="logo">
+                                          <img src="{{currentUser.avatarUrl}}" />
+                                          <p>Current Avatar</p>
+                                    </div>
+                              </div>
+                              <div class="col-right">
+                                    <ul class="md-top-menu">
+                                          <li *ngFor="let item of listCategoryDisplay">
+                                                <a *ngIf="item.id!=1" (click)="getAvatarBought(item.id)" [class.active]="item.id === flagCategory" href="javascript:void(0)">
+                                                      {{item.name}}
+                                                </a>
+                                          </li>
+                                    </ul>
+                                    <div class="md-list-unlocked-and-locked">
+                                          <a class="box-column" *ngFor="let item  of listAvatarBoughtDisplay" (click)="chooseAvatarToChange(item)">
+                                                <div class="img" [class.box-shop]="item.id == idAvatarChoosed">
+                                                      <img src="{{item.url}}">
+                                                </div>
+                                                <div class="locked-title">
+                                                      <p class="text-center">{{item.name}}</p>
+                                                </div>
+                                          </a>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" [disabled]="!avatarToChange" (click)="changeAvatar()">Update</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancelChange('avatar')">Close</button>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- modal My background -->
+<div class="modal fade" id="my-background" role="dialog">
+      <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button (click)="cancelChange('background')" type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Your Background</h4>
+                  </div>
+                  <div class="modal-body modal-body-isolation">
+                        <div class="modal-isolation">
+                              <div class="col-left">
+                                    <div class="logo">
+                                          <img src="{{currentUser.backgroundUrl}}" />
+                                          <p>Current Background</p>
+                                    </div>
+                              </div>
+                              <div class="col-right">
+                                    <div class="md-list-unlocked-and-locked">
+                                          <div *ngFor="let item  of listBackgroundBought">
+                                                <a class="box-column" (click)="chooseAvatarToChange(item)">
+                                                      <div class="img" [class.box-shop]="item.id == idAvatarChoosed">
+                                                            <img src="{{item.url}}" />
+                                                      </div>
+                                                      <div class="locked-title">
+                                                            <p class="text-center">{{item.name}}</p>
+                                                      </div>
+                                                </a>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="changeBackground()" [disabled]="!avatarToChange">Update</button>
+                        <button type="button" class="btn btn-danger" (click)="cancelChange('background')" data-dismiss="modal">Close</button>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- modal purchase  -->
+<div id="purchase" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Purchase {{typeShop=='avatar'?'Avatar':'Background'}}</h4>
+                  </div>
+                  <div class="modal-body">
+                        <p>Do you wish to purchase this {{typeShop=='avatar'?'Avatar':'Background'}}?</p>
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-default" (click)="purchase()">Purchase</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- modal purchase status -->
+<div id="statusPurchase" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Purchase avatar</h4>
+                  </div>
+                  <div class="modal-body">
+                        <p>{{statusPurchase}}</p>
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+            </div>
+      </div>
+</div>

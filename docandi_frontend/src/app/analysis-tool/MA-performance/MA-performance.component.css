@@ -1,0 +1,65 @@
+
+.m-datatable.m-datatable--default.m-datatable--loaded>.m-datatable__table>.m-datatable__head .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default.m-datatable--loaded>.m-datatable__table>.m-datatable__body .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default.m-datatable--loaded>.m-datatable__table>.m-datatable__foot .m-datatable__row>.m-datatable__cell {
+  font-weight: 500;
+}
+.m-datatable>.m-datatable__pager>.m-datatable__pager-nav>li>.m-datatable__pager-link.m-datatable__pager-link--active {
+  background: #36a3f7 !important;
+  color: #fff;
+}
+.m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+
+}
+.m-widget1 .m-widget1__item .m-widget1__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.m-widget14 .m-widget14__header .m-widget14__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.table-header-title{
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.m-datatable__pager-detail{
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.m-subheader {
+  padding: 0;
+}
+.admin-metrics-tab-ma-chart-box-text{
+  font-weight: 500;
+  font-size:14px;
+}
+
+.ngx-datepicker-container[_ngcontent-c3] .ngx-datepicker-calendar-container[_ngcontent-c3] {
+  position: absolute;
+  width: 300px;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,.08);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.08);
+  border: 1px solid #dfe3e9;
+  border-radius: 4px;
+  z-index: 50;
+}
+.box-datetime-1{
+  z-index:10;
+}
+.box-datetime-1 .form-group{
+  margin-top:10px;
+}
+.admin-metrics-download{
+  color:#36a3f7 
+}
+.box-select-1 .form-group select{
+  margin-top: 10px;
+  height: 33px;
+  padding:0; 
+  border-radius:5px;
+}

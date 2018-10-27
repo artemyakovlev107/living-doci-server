@@ -1,0 +1,58 @@
+<div class="sub-content text-center">
+  <h1 class="mbt-50">File Uploader</h1>
+  <div class="content content-file-review text-center flex-uploader no-padding" style="min-height:470px !important">
+    <div class="form-review">
+      <div class="row mt-10" *ngIf="currentFileName.three40bFile">
+        <p class="col-sm-8 control-label text-16 text-left">Filename</p>
+        <p class="col-sm-4 control-label text-16 text-left">
+          <i class="fa fa-file"></i> {{currentFileName.three40bFile}}</p>
+      </div>
+      <div class="row mt-10" *ngIf="currentFileName.EMRFile">
+        <p class="col-sm-8 control-label text-16 text-left">Filename</p>
+        <p class="col-sm-4 control-label text-16 text-left">
+          <i class="fa fa-file"></i> {{currentFileName.EMRFile}}</p>
+      </div>
+      <div class="row mt-10">
+        <p class="col-sm-8 control-label text-16 text-left">Timeframe</p>
+        <div class="col-sm-4 select-upload text-left">
+          {{date}}
+          <!-- <form #myForm="ngForm" novalidate>
+            <my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]="date"  (dateChanged)="onDateChanged($event)"></my-date-picker>
+          </form> -->
+        </div>
+      </div>
+      <div class="row mt-10">
+        <div class="col-sm-8 select-upload text-left">
+          <p class="text-16">Total</p>
+        </div>
+        <div class="col-sm-4 select-upload text-left">
+          <p class="text-16">${{total}}</p>
+        </div>
+      </div>
+      <div class="row mt-10">
+        <div class="col-sm-8 select-upload text-left">
+          <p class="text-16">Reconciliation</p>
+        </div>
+        <div class="col-sm-4 select-upload text-left">
+          <p class="text-16">(${{reconciliation}})</p>
+        </div>
+      </div>
+      <div class="row mt-10">
+        <div class="col-sm-8 select-upload text-left">
+          <p class="text-16">Retail Net Increased Access Dollars</p>
+        </div>
+        <div class="col-sm-4 select-upload text-left">
+          <p>${{increased}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="btn-next" *ngIf="!viewReport">
+      <a class="title" (click)="backtoStep2()">Back</a>
+      <button type="button" class="btn btn-success" (click)="viewReport=true">Submit</button>
+    </div>
+    <div class="btn-next" *ngIf="viewReport">
+      <a class="title" (click)="gotoUpload()">Upload Another File</a>
+      <button type="button" class="btn btn-success" (click)="submit()">View Reports</button>
+    </div>
+  </div>
+</div>

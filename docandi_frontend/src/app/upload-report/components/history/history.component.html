@@ -1,0 +1,37 @@
+<div class="sub-content text-center">
+  <h1 class="mbt-50">Data Submission History</h1>
+  <div class="container">
+    <div class="sub-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>data timeframe</th>
+            <th>340B FINANCIAL</th>
+            <th>emr</th>
+            <th>submitted by</th>
+            <th>submitted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data" [hidden]="!item.financial_url && !item.emr_url">
+            <td>{{item.date}}</td>
+            <td>
+              <label *ngIf="item.financial_url">Yes</label>
+              <p *ngIf="!item.financial_url" class="warning-title">
+                <i class="fa fa-exclamation-triangle"></i> no data submitted
+                <label class="blue" (click)="gotoUpload()" style="cursor:pointer">upload now</label>
+              </p>
+            </td>
+            <td>
+              <label *ngIf="item.emr_url">Yes</label>
+              <label *ngIf="!item.emr_url">No</label>
+            </td>
+            <td>{{item.fullname}}</td>
+            <td>{{item.updated_at}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

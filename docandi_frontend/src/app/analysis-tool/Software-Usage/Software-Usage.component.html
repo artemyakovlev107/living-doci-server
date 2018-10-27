@@ -1,0 +1,193 @@
+<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body" style="padding-top:100px;"> 
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title">Software Usage</h3>			
+                </div>
+            <div>
+        </div>
+        <div class="admin-metrics-download text-right">
+                <a (click)="download_csv()" style="color:#36a3f7"> Download CSV</a>
+                <!-- <img src="assets/images/svc-icon-download.jpg"> -->
+            </div>
+        <!-- <div>                        
+            <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                <span class="m-subheader__daterange-label" style="font-size:12px;">
+                    <span class="m-subheader__daterange-title">Today:</span>
+                    <span class="m-subheader__daterange-date m--font-brand">Jan 01,2018 - Aug 28, 2018</span>
+                </span>
+                <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+                    <i class="la la-angle-down"></i>
+                </a>
+            </span>
+        </div> -->
+        <div class='box-datetime-1' style='z-index: 10;'>
+                <div class="form-group"  style="margin-top: 10px;">
+                    <ng-datepicker [ngModel]="dateFrom" (ngModelChange)="handleDateFromChange($event)"></ng-datepicker>
+                    <!-- <datetime [ngModel]="dateFrom" (ngModelChange)="handleDateFromChange($event)" [timepicker]="false"></datetime> -->
+                </div>
+            </div>
+            <div class="box-hrr"> - </div>
+            <div class='box-datetime-1' style='z-index: 10;'>
+                <div class="form-group" style="margin-top: 10px;">
+                      <ng-datepicker [ngModel]="dateTo" (ngModelChange)="handleDateToChange($event)"></ng-datepicker>
+                    <!-- <datetime  (ngModelChange)="handleDateToChange($event)" [(ngModel)]="dateTo" [timepicker]="false"></datetime> -->
+                </div>
+            </div>
+        <div class="box-select-1">
+            <div class="form-group">
+                <select (change)="changeLocation()" [(ngModel)]="request.location_id" class="form-control" id="sel1">
+                    <option value="0">All Locations</option>
+                    <option value="{{item.id}}" *ngFor="let item of listClinic">
+                        {{item.address}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div> 
+    <div class="m-content">
+        <!-- Time of use -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                       Time of Use
+                                </h3>
+                            </div>			
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">                
+                            <div id="highOption">
+                                <!-- <chart [options]="highOption"></chart> -->
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                        Analytics
+                                </h3>
+                            </div>			
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">    
+                        <div class="row">
+                            <!-- <div class="col-12  col-md-5">
+                                <div id="option"></div>
+                                <div class="chart-icon">
+                                    <img src="assets/images/hight-chart-icon.png"/>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <div class="m-widget17">
+                                    <div class="m-widget17__stats row">
+                                        <div class="m-widget17__items col-6 col-md-3">
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/result_icon_small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap >= 2">{{listDataResponse.UsedMap}} Clicks </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap < 2">{{listDataResponse.UsedMap}} Click </span>
+                                                <span class="m-widget17__desc">
+                                                    All results
+                                                </span>  
+                                            </div>
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/delivery_icon_small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap >= 2">{{deliveryClick}} Clicks </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap < 2">{{deliveryClick}} Click </span>
+                                                <span class="m-widget17__desc">
+                                                    Delivery
+                                                </span>  
+                                            </div>
+                                        </div>
+                                        <div class="m-widget17__items col-6 col-md-3">			     
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/hours_icon_small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap >= 2">{{hoursClick}} Clicks </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap < 2">{{hoursClick}} Click </span>
+                                                <span class="m-widget17__desc">
+                                                    24 Hours
+                                                </span>  
+                                            </div>
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/upgrade_icon_small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap >= 2">{{syncClick}} Clicks </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap < 2">{{syncClick}} Click </span>
+                                                <span class="m-widget17__desc">
+                                                    34 Upgraded Boxes
+                                                </span>  
+                                            </div>
+                                        </div>
+                                        <div class="m-widget17__items col-6 col-md-3">			     
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/car_icon_small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap >= 2">{{driveClick}} Clicks </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap < 2">{{driveClick}}Click </span>
+                                                <span class="m-widget17__desc">
+                                                    Drive Thru
+                                                </span>  
+                                            </div>
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/self_icon_small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap >= 2">{{self_pay}} Clicks </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="listDataResponse.UsedMap < 2">{{self_pay}} Click </span>
+                                                <span class="m-widget17__desc">
+                                                    Self Pay
+                                                </span>  
+                                            </div>
+                                        </div>
+                                        <div class="m-widget17__items col-6 col-md-3">			     
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/clock-icon-small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="AverageTimePerPatient == null">{{0}} seconds</span>   
+                                                <span class="m-widget17__subtitle"  *ngIf="AverageTimePerPatient != null">{{AverageTimePerPatientFormat}} </span>
+                                                <span class="m-widget17__desc">
+                                                    Average time on app per patient
+                                                </span>  
+                                            </div>
+                                            <div class="m-widget17__item">
+                                                <span class="m-widget17__icon">
+                                                    <img class="image-1" src="assets/images/new_images/clock-icon-small.png">       
+                                                </span> 
+                                                <span class="m-widget17__subtitle" *ngIf="AverageTimePerPatientNotSwitch == null">{{0}} seconds </span>   
+                                                <span class="m-widget17__subtitle" *ngIf="AverageTimePerPatientNotSwitch != null">{{AverageTimePerPatientNotSwitchFormat}} </span>
+                                                <span class="m-widget17__desc">
+                                                    Average time on app per patient that didn't switch
+                                                </span>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>   
+</div> 
+</div> 

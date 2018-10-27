@@ -1,0 +1,106 @@
+<div class="sub-content text-center">
+  <h1 class="mbt-50">Data Submission History</h1>
+  <div class="">
+    <div class="content-table table">
+      <table [mfData]="history" #mf="mfDataTable" [mfRowsOnPage]="10" class="table-provider">
+        <thead>
+          <tr>
+            <th class="text-center">
+              <!-- <mfDefaultSorter by="date">Data timeframe </mfDefaultSorter> -->
+            </th>
+            <th class="text-center">
+              340B FINANCIAL STATEMENT
+            </th>
+            <th class="text-center">
+              EMR
+            </th>
+            <th class="text-center">
+              submitted by
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data;let i = index">
+            <td class="text-center">{{item.is_base_line?'Base line':item.time}}
+              <p>
+                <small *ngIf="!item.financial_url && !item.emr_url" class="text-danger">No data submitted</small>
+              </p>
+            </td>
+            <td class="text-center">
+              <span class="item-text-table text-success" *ngIf="item.financial_url">Yes</span>
+              <span class="item-text-table text-danger" *ngIf="!item.financial_url">No</span>
+              <label class="upload_label" for="financial_url_{{i}}">
+                <i class="fa fa-upload" aria-hidden="true"></i>
+              </label>
+              <label class="upload_label" *ngIf="item.financial_url" (click)="confirmDeleteFile(item,1)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </label>
+              <input type="file" hidden accept=".xlsx, .csv" (change)="uploadfile(1,$event,item.time,item.is_base_line)" id="financial_url_{{i}}"
+              />
+
+              <!-- <p class="item-text-table text-danger">No</p> -->
+            </td>
+            <td class="text-center">
+              <span class="item-text-table text-success" *ngIf="item.emr_url">Yes</span>
+              <span class="item-text-table text-danger" *ngIf="!item.emr_url">No</span>
+              <label class="upload_label" for="emr_url_{{i}}">
+                <i class="fa fa-upload" aria-hidden="true"></i>
+              </label>
+              <label class="upload_label" *ngIf="item.emr_url" (click)="confirmDeleteFile(item,2)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </label>
+              <input type="file" hidden accept=".xlsx, .csv" id="emr_url_{{i}}" (change)="uploadfile(2,$event,item.time,item.is_base_line)"
+              />
+
+              <!-- <p class="item-text-table text-danger" *ngIf="!item.emr_url">No</p></td> -->
+              <td class="text-center">
+                <p>{{item.fullname}}</p>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-default" [routerLink]="['/upload-report/upload']">Re-Upload</button>
+                <button class="btn btn-danger" [disabled]="!item.financial_url && !item.emr_url" (click)="confirmDelete(item)">Delete</button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Modal confirm delete location-->
+<div class="modal fade" id="confirmDelete" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm delete history</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure delete this?
+      </div>
+      <div class="modal-footer">
+        <button class="btn" (click)="deleteHistory()">Delete</button>
+        <button class="btn" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- delete File -->
+<div class="modal fade" id="confirmDeleteFile" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm delete file</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure delete this file?
+      </div>
+      <div class="modal-footer">
+        <button class="btn" (click)="deleteFile()">Delete</button>
+        <button class="btn" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

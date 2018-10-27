@@ -1,0 +1,114 @@
+<div class="admin-metrics">
+    <div class="wrapper-dashboard_v1">
+        <div class="wrapper-dashboard_v1--inner">
+            <div class="row">
+                <app-menu-admin [page]="'faq'"></app-menu-admin>
+                <div class="dashboard_col_right">
+                    <H2>MANAGE FAQ</H2>
+                    <div class="row">
+                        <div class="col-md-6"><a class="btn" (click)="showModalAddEdit('Add','')">Add FAQ</a></div>
+                        <div class="col-md-6"></div>
+                    </div>
+                    <div class="dashboard_col_right--content">
+                        <div class=" content-tab current" id="content-tab-1">
+                            <div class="admin-metrics-bottom table-responsive">
+                                <table id="table-ma" class="table table-striped tablesorter-blue table-admin-metrics"
+                                        [mfData]="listFAQ" #mf="mfDataTable">
+                                    <thead class="table-bordered">
+                                    <tr>
+                                        <th class="text-center">
+                                            <mfDefaultSorter by="name">Questions</mfDefaultSorter>
+                                        </th>
+                                        <th class="text-center">
+                                            <mfDefaultSorter by="address">Answers</mfDefaultSorter>
+                                        </th>
+                                        <th class="text-center">
+                                            Action
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-bordered">
+                                    <tr *ngFor="let item of listFAQ">
+                                        <td class="text-center">{{item.question}}</td>
+                                        <td class="text-center">{{item.answer}}</td>
+                                        <td class="text-center"><a class="btn btn-left"
+                                                                   (click)="showModalAddEdit('Update',item)">Edit</a><a
+                                                class="btn btn-delete" (click)="confirmDeleteFAQ(item)">Delete</a></td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="12">
+                                            <mfBootstrapPaginator
+                                                                  [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddEditModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{typeModal}} FAQ</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" #f="ngForm">
+                    <div class="form-group add-input">
+                        <label for="question" class="col-sm-2 control-label">Question</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="faq.question" name="question" required class="form-control"
+                                   id="question" placeholder="Question" #question="ngModel">
+                            <small *ngIf="!question.valid && faq.question != null" class="admin-hospital-message text-danger">Question is
+                                required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group add-input">
+                        <label for="answer" class="col-sm-2 control-label">Answer</label>
+                        <div class="col-sm-10">
+                            <input type="textarea" required [(ngModel)]="faq.answer" class="form-control" name="answer"
+                                   id="answer" placeholder="Answer" #answer="ngModel">
+                            <small *ngIf="!answer.valid && faq.answer != null" class="admin-hospital-message text-danger">Answer number
+                                is required.
+                            </small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="typeModal=='Add'" (click)="addFAQ()" [disabled]="!f.valid" class="btn">Add</button>
+                <button *ngIf="typeModal=='Update'" (click)="updateFAQ()" [disabled]="!f.valid" class="btn">Update
+                </button>
+                <button class="btn" (click)="hideModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDelete" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Delete FAQ</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are use sure delete ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="deleteFAQ()">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

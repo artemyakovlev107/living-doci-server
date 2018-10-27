@@ -1,0 +1,93 @@
+#m_header{
+  z-index:12;
+}
+.modal-doc-help h2 {
+    font-weight: bold !important;
+    font-size: 2.5em; }
+  
+  .modal-doc-help h3 {
+    text-align: left; }
+  
+  .modal-doc-help .text-1 {
+    font-weight: 600 !important;
+    margin-bottom: 0px;
+    color: #000;
+    margin-bottom: 0px; }
+  
+  .modal-doc-help .text-2 {
+    margin-bottom: 25px; }
+  
+  .m-brand__logo-wrapper .logo{
+    height:43px;
+    padding:3px;
+  }
+
+  .m-header .m-header__top {
+    background: #fff;;
+    height: 60px;
+  }
+  .m-header .m-header__bottom {
+    background: #fff;
+    border-top: 1px solid rgba(108, 110, 134, 0.5);
+    height: 60px;
+  }
+  
+  .m-topbar .m-topbar__nav.m-nav>.m-nav__item.m-topbar__user-profile>.m-nav__link .m-topbar__welcome {
+
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.m-topbar .m-topbar__nav.m-nav>.m-nav__item.m-topbar__user-profile>.m-nav__link .m-topbar__welcome :hover{
+
+   color:black;
+}
+.capture-btn{
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 25px;
+  width: 160px;
+  text-align: center;
+}
+
+.m-nav .m-nav__item>.m-nav__link .m-nav__link-text {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.m-nav .m-nav__item>.m-nav__link:hover {
+  color: #36A3F7;
+}
+.m-nav .m-nav__item:hover>.m-nav__link .m-nav__link-text {
+  color: #36A3F7;
+}
+.m-nav .m-nav__item>.m-nav__link .m-nav__link-text:active {
+  color: #36A3F7;
+}
+
+@media (max-width: 1200px){
+  #m_header_nav{
+    display: none;
+  }
+.m-brand .m-brand__tools .m-dropdown {
+    margin-left: 20px;
+    margin-right: 0px;
+}
+.m-brand .m-brand__tools .m-dropdown .btn {
+  border-color: #ccc;
+  padding: 0.5 1rem 0.5 1rem;
+  color: #36A3F7;
+}
+  .m-brand .m-brand__tools .m-dropdown .btn:focus {
+    border-color: #ccc;
+    box-shadow: none;
+  }
+  .m-brand .m-brand__tools .m-dropdown .btn:hover {
+    background: #36A3F7;
+    border-color: #ccc;
+    color: #fff;
+  }
+}
+
+.m-dropdown.m-dropdown--medium .m-dropdown__wrapper {
+  width: 225px;
+}

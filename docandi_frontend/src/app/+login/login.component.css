@@ -1,0 +1,109 @@
+
+
+ .login-page{
+
+    background-image: url("/assets/images/docandi-patient-care.jpg");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size: cover;
+    height: 100vh;
+ }
+ .m-login__aside{
+    background: #F5F5F6;
+    
+ }
+ .m-login.m-login--1 .m-login__aside {
+    width: 50%;
+    padding: 7% 13%;
+
+ }
+.login-portlet{
+    background: #fff;
+    height: auto;
+    box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.05000000074505806);
+
+}
+.login-logo{
+    width:60%;
+    max-width: 250px;
+    height: auto;
+    /* padding-top: 33px;
+    padding-bottom: 12px; */
+}
+
+.m-login.m-login--1 .m-login__wrapper {
+
+    padding: 2rem 4rem 2rem 4rem;
+}
+.login-text{
+    margin-left: -250px;
+}
+
+.m-login.m-login--1 .m-login__content .m-login__welcome {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.m-login.m-login--1 .m-login__content .m-login__msg{
+    font-weight: 500;
+    font-size:1.4rem;
+}
+
+.m-login.m-login--1 .m-login__wrapper .m-login__form .m-form__group .form-control {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #ebedf2;
+    padding: 1rem 0;
+    margin-top: 0.1rem;
+    font-size: 1.2rem;
+    font-weight: 530;
+}
+
+.m-login.m-login--1 .m-login__wrapper .m-login__head .m-login__title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.m-login.m-login--1 .m-login__wrapper .m-login__form .m-login__form-sub .m-link {
+    font-size: 1rem;
+    color: #36A3F7;
+    font-weight: 600;
+}
+.modal-img{
+    max-width: 100%;
+    height: auto;
+}
+.modal-text{
+    font-weight:500;
+}
+.login-right{
+    background-color: rgba(54, 163, 247, 0.84);
+}
+
+@media screen and (max-width: 1340px) {
+ 
+    .m-login.m-login--1 .m-login__aside {
+        width: 50%;
+        padding: 12% 7%;
+     }
+
+     .login-text{
+        margin-left: -140px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+ .login-text {
+    margin-left: 10px;
+}
+
+.m-login.m-login--1 .m-login__aside {
+    width: 100%;
+    padding: 0% 0%;
+ }
+ .m-grid.m-grid--hor-tablet-and-mobile.m-grid--tablet-and-mobile>.m-grid__item.m-grid__item--order-tablet-and-mobile-1 {
+     height:30px;
+ }
+
+}

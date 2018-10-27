@@ -1,0 +1,127 @@
+<form novalidate [formGroup]="mapForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-xs-6">Claim Type</div>
+    <div class="col-xs-3">
+      <select class="form-control">
+        <option value="">row start</option>
+      </select>
+    </div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="claim_type" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">RX Claim Solid</div>
+    <div class="col-xs-3">
+      <select class="form-control">
+        <option value="">row range from</option>
+      </select>
+    </div>
+    <div class="col-xs-1">
+      <input class="form-control" formControlName="rx_claim_sold_start" />
+    </div>
+    <div class="col-xs-1 text-center">
+      to
+    </div>
+    <div class="col-xs-1">
+      <input class="form-control" formControlName="rx_claim_sold_end" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">RX Reversals</div>
+    <div class="col-xs-3">
+      <select class="form-control">
+        <option value="">column start</option>
+      </select>
+    </div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="rx_reversals" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Number RXs</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="number_rxs" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Estimated 340B Cost</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="estimated_340b_cost" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Plan AR Amount</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="plan_ar_amount" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Copay Amount</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="copay_amount" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Sales Tax</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="saled_tax" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Admin Fee</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="admin_fee" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Dispense Fee</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="dispense_fee" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Insured Admin Fee</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="insured_admin_fee" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Client Fee</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="client_fee" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Increased Access Dollars
+      <sup>2</sup>
+    </div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="increased_access_dollars"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Total</div>
+    <div class="col-xs-3">
+      <select class="form-control">
+        <option value="">signle cell</option>
+      </select>
+    </div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="total"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Reconciliation Adjustment</div>
+    <div class="col-xs-3">
+      <input class="form-control"formControlName="reconciliation_adjustment" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Retail Net Increased Access Dollars</div>
+    <div class="col-xs-3">
+      <input class="form-control" formControlName="retail_net_increase_access_dollar"/>
+    </div>
+  </div>
+  <button class="btn btn-success">Save</button>
+</form>
